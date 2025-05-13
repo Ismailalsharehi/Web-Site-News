@@ -1,0 +1,140 @@
+/* :root {
+    --primary-color: #0099cc;
+    --secondary-color: #e63946;
+    --dark-bg: #000;
+    --light-bg: #f8f9fa;
+    --white: #ffffff;
+}
+
+body {
+    background-color: var(--light-bg);
+    color: #333;
+    font-family: 'Tajawal', sans-serif;
+}
+
+
+.navbar-dark .navbar-nav .nav-link {
+    color: white !important;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link.active {
+    color: var(--primary-color) !important;
+}
+
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border: none;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #007bb5;
+}
+
+
+.card-title a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.card-title a:hover {
+    color: var(--secondary-color);
+} */
+/* 
+ :root {
+    --primary-color: #003172;
+    --secondary-color: #0099cc;
+    --light-bg: #f8f9fa;
+    --white: #ffffff;
+}
+
+body {
+    background-color: var(--light-bg);
+    color: #333;
+    font-family: 'Tajawal', sans-serif;
+}
+
+
+.navbar-dark .navbar-nav .nav-link {
+    color: white !important;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link.active {
+    color: var(--secondary-color) !important;
+}
+
+
+.btn-primary {
+    background-color: var(--secondary-color);
+    border: none;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #007bb5;
+}
+
+
+.card-title a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.card-title a:hover {
+    color: #e63946; 
+} */
+
+
+:root {
+    --primary-color: #2a4e3d;
+    --secondary-color: #6c9b84;
+    --accent-color: #ff6f31;
+    --light-bg: #f9f9f9;
+}
+
+body {
+    background-color: var(--light-bg);
+    color: #333;
+    font-family: 'Tajawal', sans-serif;
+}
+
+/* Navbar */
+.navbar-dark .navbar-nav .nav-link {
+    color: white !important;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link.active {
+    color: var(--secondary-color) !important;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--accent-color);
+    border: none;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #e05d2b;
+}
+
+/* Cards */
+.card-title a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.card-title a:hover {
+    color: var(--accent-color);
+}
+
+/* login page */
+
+
