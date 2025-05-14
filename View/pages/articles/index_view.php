@@ -1,8 +1,7 @@
 <!-- بشكل عاح عرض  الأخبار للمستخدم -->
-
-<?php include '../../parts/header.php'; ?>
-<?php include '../../parts/navegation.php'; ?>
-
+<?php require('../../parts/header.php') ?>
+<?php require('../../parts/navegation.php') ?>
+<?php require('../../parts/adminBar.php') ?>
 
 
 
@@ -203,4 +202,4 @@
 </div>
 
 
-<?php include '../../parts/footer.php'; ?>
+<?php require('../../parts/footer.php') ?>

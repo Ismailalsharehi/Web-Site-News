@@ -1,15 +1,39 @@
 
 
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">لوحة التحكم</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-<!-- هنا كل الازرار الخاصة بالمدير حق التعدل والحذف والاضافة ووو كل زر طبعاً داخل فووورم معين
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <!-- رابط الرئيسية يظهر للجميع -->
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/admin">الرئيسية</a>
+          </li>
 
- 
-<?php if ($_SESSION['user'] ?? false) : ?>
-
-  <?php if ($_SESSION['user']['type'] == "admin" || $_SESSION['user']['type'] == "manager") : ?>
-        <nav class="bar_admin">
+          <!-- للمشرفين فقط -->
+          
+            <li class="nav-item"><a class="nav-link" href="/admin/users">المستخدمين</a></li>
+            <li class="nav-item"><a class="nav-link" href="/admin/categories">التصنيفات</a></li>
+            <li class="nav-item"><a class="nav-link" href="/admin/tags">الوسوم</a></li>
           
 
-         <li>
-            <form action="/islamic_endowments_manage" method="get"><input type="hidden" name="" value=""><button type="submit" aria-label="الاوقاف">الاوقاف</button></form>
-       </li> -->
+          <!-- للمشرفين والمحررين -->
+          
+            <li class="nav-item"><a class="nav-link" href="/admin/articles">المقالات</a></li>
+            <li class="nav-item"><a class="nav-link" href="/admin/comments">التعليقات</a></li>
+          
+
+          <!-- للكتاب (authors) -->
+        
+            <li class="nav-item"><a class="nav-link" href="/admin/my-articles">مقالاتي</a></li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+
