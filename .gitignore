@@ -6,3 +6,5 @@
 
 # استثناء مجلد NoImportant بكل محتوياته
 /NoImportant/
+
+*.htaccess

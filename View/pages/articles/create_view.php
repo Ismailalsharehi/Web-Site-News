@@ -34,9 +34,9 @@
               <label for="category_id" class="form-label">التصنيف</label>
               <select class="form-select" id="category_id" name="category_id" required>
                 <option value="">اختر تصنيفاً</option>
-                <?php while ($category = $categories->fetch_assoc()): ?>
-                  <option value="<?= htmlspecialchars($category['id']) ?>"><?= htmlspecialchars($category['name']) ?></option>
-                <?php endwhile; ?>
+                
+                  <option value=" hellow" > </option>
+                
               </select>
             </div>
 

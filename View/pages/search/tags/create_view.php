@@ -2,7 +2,6 @@
 <?php require('../../../parts/navegation.php') ?>
 <?php require('../../../parts/adminBar.php') ?>
 
-
 <div class="bg-light">
   <div class="container mt-5">
     <div class="card">

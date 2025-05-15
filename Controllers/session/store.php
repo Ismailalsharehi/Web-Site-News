@@ -86,3 +86,37 @@ function view($path, $attributes = [])
 
     require base_path('views/' . $path);
 }
+
+
+
+
+
+// <?php
+
+class SessionHelper {
+    public static function start() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+    }
+
+    public static function destroy() {
+        self::start();
+        session_unset();
+        session_destroy();
+    }
+
+    public static function flash($key, $message = null) {
+        self::start();
+        if ($message) {
+            $_SESSION['flash'][$key] = $message;
+        } else {
+            if (!empty($_SESSION['flash'][$key])) {
+                $msg = $_SESSION['flash'][$key];
+                unset($_SESSION['flash'][$key]);
+                return $msg;
+            }
+            return null;
+        }
+    }
+}

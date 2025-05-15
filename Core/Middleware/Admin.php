@@ -1,6 +1,24 @@
 
 
 <?php
+ use Core\Session;
+
+class Admin{
+
+  public static function handle(){
+
+
+    if(!Session::has('user')){
+
+      header("location: /login");
+      exit;
+    }
+
+  }
+
+
+
+}
 
 // namespace core\Middleware ;
 // class Admin {
@@ -12,3 +30,5 @@
 //     }
 
 // }
+
+
