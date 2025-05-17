@@ -1,8 +1,8 @@
 <?php
+namespace Core;
 
-namespace core;
 
-class Session{
+class Session {
 
 public static function start():void{
   if(session_status()=== PHP_SESSION_NONE){
@@ -11,7 +11,7 @@ public static function start():void{
   }
 }
 
-public static function set (string $key, mixed $value):void{
+public static function set (string $key, mixed $value):void{ 
 
   self::start();
   $_SESSION[$key] =$value;
@@ -44,5 +44,4 @@ public static function all():array{
   return $_SESSION;
 }
 
- 
 }

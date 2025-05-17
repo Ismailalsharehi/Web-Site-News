@@ -1,5 +1,17 @@
 <!-- بشكل عاح عرض  الأخبار للمستخدم -->
 
+<?php
+
+
+require_once __DIR__ . '../../../../vendor/autoload.php';
+use Core\Flash;
+
+$success = Flash::get('success');
+if ($success) {
+    echo '<div class="alert alert-danger">' . htmlspecialchars($success) . '</div>';
+}
+?>
+
 <?php include '../../parts/header.php'; ?>
 <?php include '../../parts/navegation.php'; ?>
 

@@ -1,7 +1,11 @@
 <?php
-use core\Session;
+namespace Core;
 
-class Flash{
+// require_once base_path('Core/Session.php'); // Include the Session class
+// Include the autoloader
+use Core\Session; // Import the Session class
+
+class Flash {
 
   public static function set(string $key, string $message):void{
 
