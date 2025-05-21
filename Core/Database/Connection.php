@@ -74,9 +74,9 @@ class Connection{
         
         // Set the character set to utf8mb4
         
-        Flash::set('success', 'تم الاتصال بقاعدة البيانات بنجاح');
+        // Flash::set('success', 'تم الاتصال بقاعدة البيانات بنجاح');
         
-        echo "<div class='alert alert-success'>" . Flash::get('success') . "</div>";
+        // echo "<div class='alert alert-success'>" . Flash::get('success') . "</div>";
 
       } catch (PDOException $e) {
         Flash::set('error', 'فشل الاتصال بقاعدة البيانات: ' . $e->getMessage());

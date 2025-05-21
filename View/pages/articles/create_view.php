@@ -1,4 +1,27 @@
-<?php require('../../parts/header.php') ?>
+<?php
+
+ require_once __DIR__ . '../../../../vendor/autoload.php';
+
+use Core\Flash;
+use Core\Session;
+ use Controllers\articles;
+
+$error = Flash::get('error');
+$success = Flash::get('success');
+
+ if ($error) {
+     echo '<div class="alert alert-danger">' . htmlspecialchars($error) . '</div>';
+}
+ else{
+    echo '<div class="alert alert-danger">' . htmlspecialchars($success) . '</div>';
+ } 
+
+require('../../../Controllers/articles/create.php');
+
+  
+?>
+
+<?php require('../../parts/header.php' ) ?>
 <?php require('../../parts/navegation.php') ?>
 <?php require('../../parts/adminBar.php') ?>
 
@@ -6,7 +29,7 @@
 <div class="container mt-5">
   <h2>إضافة مقال جديد</h2>
 
-  <form action="process_article.php" method="POST" enctype="multipart/form-data">
+  <form action="../../../Controllers/articles/create.php" method="POST" enctype="multipart/form-data">
     <div class="row">
       <div class="col-md-8">
         <div class="mb-3">
@@ -34,20 +57,22 @@
               <label for="category_id" class="form-label">التصنيف</label>
               <select class="form-select" id="category_id" name="category_id" required>
                 <option value="">اختر تصنيفاً</option>
+                <?php foreach ($categories as $cat): ?>
                 
-                  <option value=" hellow" > </option>
+                  <option value="<?= $cat['id'] ?>"><?= htmlspecialchars($cat['name']) ?></option>
+                  <?php endforeach; ?>
                 
               </select>
             </div>
-
+              
             <div class="mb-3">
               <label for="tags" class="form-label">الوسوم (اختياري)</label>
               <input type="text" class="form-control" id="tags" name="tags" placeholder="مثال: تقنية،أخبار،2024">
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3">  
               <label for="image" class="form-label">صورة المقال الرئيسية</label>
-              <input type="file" class="form-control" id="image" name="image" accept="image/*">
+              <input type="file" class="form-control" id="image" name="photo" accept="image/*">
             </div>
 
             <div class="mb-3">
@@ -69,8 +94,8 @@
               <label class="form-check-label" for="is_featured">مقال مميز</label>
             </div>
 
-            <!-- تمرير معرف المستخدم الحالي -->
-            <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'] ?? 1 ?>"> <!-- فرضًا لديك جلسة مستخدم -->
+            <!--  معرف المستخدم الحالي -->
+            <input type="hidden" name="user_id" value="<?=Session::get('user_id', 1) ?>">
 
             <div class="d-grid gap-2">
               <button type="submit" name="add_article" class="btn btn-primary">نشر المقال</button>
@@ -82,7 +107,5 @@
     </div>
   </form>
 </div>
-
-
 
 <?php require('../../parts/footer.php') ?>

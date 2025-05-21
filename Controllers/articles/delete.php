@@ -12,16 +12,17 @@ use PDOException;
 try {
   $db = Connection::connect(); 
 
-  $id = $_POST['user_id'] ?? 0; 
+  $id = $_POST['article_id'] ?? 0; 
 
-  $stmt = $db->prepare("DELETE FROM users WHERE id = :id");
+  $stmt = $db->prepare("DELETE FROM articles WHERE id = :id");
   $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
   $stmt->execute();
 
   if ($stmt->rowCount() > 0) {
-    Flash::set('success', "تم حذف المستخدم بنجاح");
+    Flash::set('success', "تم حذف المقال بنجاح");
+    
   } else {
-    Flash::set('error', "لم يتم حذف المستخدم");
+    Flash::set('error', "لم يتم حذف المقال");
   }
 
   header("Location: " . $_SERVER["HTTP_REFERER"]);

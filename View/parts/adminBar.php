@@ -17,7 +17,7 @@
 
           <!-- للمشرفين فقط -->
           
-            <li class="nav-item"><a class="nav-link" href="/admin/users">المستخدمين</a></li>
+            <li class="nav-item"><a class="nav-link" href="../../../View/pages/users/manage_view.php">المستخدمين</a></li>
             <li class="nav-item"><a class="nav-link" href="/admin/categories">التصنيفات</a></li>
             <li class="nav-item"><a class="nav-link" href="/admin/tags">الوسوم</a></li>
           

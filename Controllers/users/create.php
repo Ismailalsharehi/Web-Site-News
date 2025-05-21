@@ -57,6 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    $_SESSION['user_data']= $_POST;
+
     Session::set('user_data', $_POST);
 
     $db = Connection::connect();
