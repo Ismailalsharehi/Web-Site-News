@@ -1,47 +1,80 @@
 <?php
+
 namespace Core;
+require_once __DIR__ . '/../vendor/autoload.php';
 
 
-class Session {
+class Session
+{
 
-public static function start():void{
-  if(session_status()=== PHP_SESSION_NONE){
-    session_start();
-
+  public static function start(): void
+  {
+    if (session_status() === PHP_SESSION_NONE) {
+      session_start();
+    }
   }
-}
 
-public static function set (string $key, mixed $value):void{ 
+  public static function set(string $key, mixed $value): void
+  {
 
-  self::start();
-  $_SESSION[$key] =$value;
-}
+    self::start();
+    $_SESSION[$key] = $value;
+  }
 
-public static function get(string $key, mixed $defult = null):mixed{
-  self::start();
-  return $_SESSION[$key]?? $defult;
-}
+  public static function get(string $key, mixed $defult = null): mixed
+  {
+    self::start();
+    return $_SESSION[$key] ?? $defult;
+  }
 
-public static function has(string $key):bool{
-  self::start();
-  return isset($_SESSION[$key]);
-}
+  public static function has(string $key): bool
+  {
+    self::start();
+    return isset($_SESSION[$key]);
+  }
 
 
-public static function remove(string $key):void{
-  self::start();
-  unset($_SESSION[$key]); 
-}
+  public static function remove(string $key): void
+  {
+    self::start();
+    unset($_SESSION[$key]);
+  }
 
-public static function destroy():void{
-self::start();
-session_unset();
-session_destroy();
-}
+  public static function destroy(): void
+  {
+    self::start();
+    session_unset();
+    session_destroy();
+  }
 
-public static function all():array{
-  self::start();
-  return $_SESSION;
-}
+  public static function all(): array
+  {
+    self::start();
+    return $_SESSION;
+  }
 
+
+  public static function user(): ?array
+  {
+    return self::get('user');
+  }
+
+  public static function userRole(): ?string
+  {
+    return self::user()['role'] ?? null;
+  }
+
+  public static function isAdmin(): bool
+  {
+    return self::userRole() === 'admin';
+  }
+
+  public static function hasRole(string $role): bool
+  {
+    return self::userRole() === $role;
+  }
+  public static function isLoggedIn(): bool
+  {
+    return self::has('user');
+  }
 }

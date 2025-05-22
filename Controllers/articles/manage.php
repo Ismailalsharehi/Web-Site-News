@@ -89,7 +89,7 @@ try {
     $articleStmt->execute($articleParams);
     $articles = $articleStmt->fetchAll();
 
-    
+    $articles_count = count($articles);
 
 
 }   catch (PDOException $e) {

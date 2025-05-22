@@ -36,9 +36,14 @@ require('../../../Controllers/articles/manage.php');
     <!-- العنوان وزر الإضافة -->
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h4>إدارة المقالات</h4>
-      <a href="./create_article.php" class="btn btn-success">
+      <a href="./create_view.php" class="btn btn-success">
         + <i class="bi bi-file-earmark-plus"></i> إضافة مقال جديد
       </a>
+    </div>
+    <div class="alert alert-info">
+      إجمالي المقالات: <strong><?= htmlspecialchars($articles_count)?></strong>
+
+      
     </div>
 
     <!--  البحث والفلترة -->

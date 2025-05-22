@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_article'])) {
         $sql .= ", image_path = :image_path";
     }
 
-    $sql .= " WHERE id = :id";
+    $sql .= " WHERE id = :id" ;
 
     $stmt = $pdo->prepare($sql);
 

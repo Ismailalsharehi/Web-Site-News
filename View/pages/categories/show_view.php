@@ -1,6 +1,31 @@
-<?php require('../../parts/header.php') ?>
-<?php require('../../parts/navegation.php') ?>
-<?php require('../../parts/adminBar.php') ?>
+
+<?php 
+
+ use Core\Flash;
+use Core\Session;
+// use Controllers\categories;
+
+$error = Flash::get('error');
+$success = Flash::get('success'); 
+
+if ($error) {
+    echo '<div class="alert alert-danger">' . htmlspecialchars($error) . '</div>';
+}
+
+if ($success) {
+    echo '<div class="alert alert-success">' . htmlspecialchars($success) . '</div>';
+}
+
+
+
+  
+  // var_dump($categories['name']);
+?>
+
+<?php require_once __DIR__ . '../../../parts/header.php'; ?>
+
+<?php require_once __DIR__ . '../../../parts/navegation.php'; ?>
+<?php require_once __DIR__ . '../../../parts/adminBar.php'; ?>
 
 
 <section class="bg-light">
@@ -8,18 +33,25 @@
 <div class="container mt-5">
   <div class="card">
     <div class="card-header bg-primary text-white">
-      <h4>معلومات القسم: أخبار عاجلة</h4>
+      <h4>معلومات قسم :<?= htmlspecialchars($categories['name']) ?> </h4> 
     </div>
     <div class="card-body">
-      <p><strong>الاسم:</strong> أخبار عاجلة</p>
-      <p><strong>الـSlug:</strong> urgent</p>
-      <p><strong>الوصف:</strong> هذا القسم يتعامل مع الأخبار العاجلة التي تحدث في جميع أنحاء العالم.</p>
-      <p><strong>تاريخ الإنشاء:</strong> 2025-05-12</p>
-      <p><strong>آخر تعديل:</strong> 2025-05-12</p>
+    <?php  ?>
+      <p><strong>رقم القسم:</strong><?= htmlspecialchars($categories['id']) ?></p>
+      <p><strong>الاسم:</strong> <?= htmlspecialchars($categories['name']) ?>  </p>
+      <p><strong>الـSlug:</strong>  <?= htmlspecialchars($categories['slug']) ?></p>
+      <p><strong>الوصف:</strong>  <?= htmlspecialchars($categories['description']) ?></p>
+      <p><strong>تاريخ الإنشاء:</strong> <?= htmlspecialchars($categories['created_at']) ?></p>
+      <p><strong>آخر تعديل:</strong> <?= htmlspecialchars($categories['updated_at']) ?></p>
+      <p><strong>عدد المقالات بهذا القسم: </strong>  <?= htmlspecialchars($article_count)?></p>
+      
+      <p><strong>عدد المشاهدات لهذا القسم:</strong> <?= htmlspecialchars($categories['id']) ?></p>
+    
+        
     </div>
     <div class="card-footer text-end">
-      <a href="index.html" class="btn btn-secondary">الرجوع</a>
-      <a href="edit.html?id=1" class="btn btn-warning">تعديل</a>
+      <a href="../../View/pages/categories/manage_view.php" class="btn btn-secondary">الرجوع</a>
+      
     </div>
   </div>
 </div>
@@ -28,4 +60,4 @@
 
 
 
-<?php require('../../parts/footer.php') ?>
+<?php require_once __DIR__ . '../../../parts/footer.php'; ?>

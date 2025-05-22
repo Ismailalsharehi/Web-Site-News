@@ -3,7 +3,7 @@
 
   use Core\Flash;
   use Core\Session;
-use Controller\articles;
+use Controllers\articles;
 
 $error = Flash::get('error');
 $success = new Flash();

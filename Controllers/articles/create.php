@@ -21,17 +21,16 @@ use Core\Flash;
 // var_dump("sdfgbhnj");
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL); 
+error_reporting(E_ALL);
 
 
 
 $pdo = Connection::connect();
 try {
-  
-  $stmt = $pdo->prepare("SELECT id, name FROM categories"); // بدون شرط id
-$stmt->execute();
-$categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+  $stmt = $pdo->prepare("SELECT id, name FROM categories"); // بدون شرط id
+  $stmt->execute();
+  $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
   Flash::set('error', '   فشل الاتصال الان');
   $e->getMessage();
@@ -49,13 +48,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_article'])) {
 
 
 
-  
+
 
 
 
   $title        = Functions::cleanInput($_POST['title']);
   $summary      = Functions::cleanInput($_POST['summary']);
-  $content      = trim($_POST['content']); 
+  $content      = trim($_POST['content']);
   $category_id  = (int) $_POST['category_id'];
   $status       = in_array($_POST['status'], ['draft', 'published', 'archived']) ? $_POST['status'] : 'draft';
   $is_featured  = isset($_POST['is_featured']) ? 1 : 0;
@@ -71,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_article'])) {
     exit;
   }
 
-  
+
   // التأكد من أن الـ slug فريد
   try {
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM articles WHERE slug = ?");
@@ -91,46 +90,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_article'])) {
 
   // $image_path = null;
 
-  
-if (isset($_POST["submit"])) {
 
-$file = $_FILES['photo']['name'];
-$tmp = $_FILES['photo']['tmp_name'];
-$size = $_FILES['photo']['size'];
-$type = $_FILES['photo']['type'];
-$error = $_FILES['photo']['error'];
-$fileExt = explode('.', $file);
-$fileActual = strtolower(end($fileExt));
-$allow = array('jpg', 'jpeg', 'png', 'pdf');
-if (in_array($fileActual, $allow)) {
-    if ($error === 0) {
+  if (isset($_POST["submit"])) {
+
+    $file = $_FILES['photo']['name'];
+    $tmp = $_FILES['photo']['tmp_name'];
+    $size = $_FILES['photo']['size'];
+    $type = $_FILES['photo']['type'];
+    $error = $_FILES['photo']['error'];
+    $fileExt = explode('.', $file);
+    $fileActual = strtolower(end($fileExt));
+    $allow = array('jpg', 'jpeg', 'png', 'pdf');
+    if (in_array($fileActual, $allow)) {
+      if ($error === 0) {
         if ($size < 10000000) {
-            $filenamenew = uniqid('', true) . "." . $fileActual;
-            $fileDestination = __DIR__ . '/../../View/viewsmedia/images/' . $filenamenew;
+          $filenamenew = uniqid('', true) . "." . $fileActual;
+          $fileDestination = __DIR__ . '/../../View/viewsmedia/images/' . $filenamenew;
 
-            echo $fileDestination;
-            move_uploaded_file($tmp, $fileDestination);
+          echo $fileDestination;
+          move_uploaded_file($tmp, $fileDestination);
         } else {
-            Flash::set('error', '  حجم الملف كبير جداُ الحد المسموح به هو 10 ميجا ');
-      header("Location: " . $_SERVER["HTTP_REFERER"]);
-      exit;
+          Flash::set('error', '  حجم الملف كبير جداُ الحد المسموح به هو 10 ميجا ');
+          header("Location: " . $_SERVER["HTTP_REFERER"]);
+          exit;
         }
-    } else {
+      } else {
         Flash::set('error', '  فشل أثناء رفع الملف');
-      header("Location: " . $_SERVER["HTTP_REFERER"]);
-      exit;
-    }
-} else {
-    // abort(400);
-    Flash::set('error', '  نوع الملف غير مسموح ');
+        header("Location: " . $_SERVER["HTTP_REFERER"]);
+        exit;
+      }
+    } else {
+      // abort(400);
+      Flash::set('error', '  نوع الملف غير مسموح ');
       header('Location: ../../View/pages/articles/create_view.php');
       exit;
-}
-} else {
+    }
+  } else {
     Flash::set('error', '  لم يتم رفع أي صورة');
-      header("Location: " . $_SERVER["HTTP_REFERER"]);
-      exit;
-}
+    header("Location: " . $_SERVER["HTTP_REFERER"]);
+    exit;
+  }
 
 
 
@@ -174,7 +173,7 @@ if (in_array($fileActual, $allow)) {
 
   //   // مسار الحفظ
   //   $uploadDir = dirname(__DIR__, 2) . '/views/media/images/';
-    
+
 
   //   if (!is_dir($uploadDir)) {
   //     mkdir($uploadDir, 0755, true);

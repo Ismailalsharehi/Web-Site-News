@@ -1,205 +1,136 @@
-<!-- بشكل عاح عرض  الأخبار للمستخدم -->
-<?php require('../../parts/header.php') ?>
-<?php require('../../parts/navegation.php') ?>
-<?php require('../../parts/adminBar.php') ?>
+
+<?php 
+  use Controllers\articles;
+?>
+<?php require_once __DIR__ . '../../../parts/header.php'; ?>
+<?php require_once __DIR__ . '../../../parts/navegation.php'; ?>
+<?php require_once __DIR__ . '../../../parts/adminBar.php'; ?>
 
 
 
-<!-- الخبر الرئيسي -->
+<!--  شريط الأخبار العاجلة -->
+<div class="bg-danger text-white py-2 px-3 mb-3">
+  <marquee behavior="scroll" direction="right" scrollamount="5">
+    <?php foreach ($newsNow as $news): ?>
+  🔴 عاجل: <a href="news/single.php?slug=news-<?= htmlspecialchars($news['slug']) ?>" class="text-white fw-bold">
+    <?= htmlspecialchars($news['title']) ?>
+  </a> &nbsp;&nbsp;&nbsp;
+<?php endforeach; ?>
 
-
-<!-- الخبر الرئيسي -->
-
-<!-- <div class="row g-3 mb-4">
-    <div class="col-md-12">
-        <div class="card border-0 shadow-sm h-100">
-            <img src="."  class="card-img-top rounded-0" alt="...">
-            <div class="card-body bg-secondary text-white">
-                <h4 class="card-title">عنوان الخبر العاجل هنا كما في موقع الحدث</h4>
-                <p class="card-text">وصف قصير لهذا الخبر المهم جداً الذي يظهر في أعلى الصفحة.</p>
-                <a href="news/single.php?id=1" class="btn btn-primary btn-sm">قراءة المزيد</a>
-            </div>
-        </div>
-    </div>
-</div>  -->
-
-<!-- الأخبار الأخرى -->
-
-<!-- <div class="row g-3">
-    <div class="col-md-12">
-        <h5 class="text-primary mb-3 border-bottom pb-2">آخر الأخبار</h5>
-        <div class="row g-3">
-            <?php for ($i = 1; $i <= 4; $i++): ?>
-            <div class="col-md-6">
-                <div class="card border-0 shadow-sm">
-                    <img src="assets/images/news<?= $i ?>.jpg" class="card-img-top rounded-0" alt="...">
-                    <div class="card-body p-3">
-                        <h6 class="card-title">عنوان الخبر <?= $i ?></h6>
-                        <p class="card-text small">وصف قصير لخبر <?= $i ?>...</p>
-                        <a href="news/single.php?id=<?= $i ?>" class="btn btn-primary btn-sm">قراءة</a>
-                    </div>
-                </div>
-            </div>
-            <?php endfor; ?>
-        </div>
-    </div>
-</div> -->
-
-<!-- زر المزيد -->
-<!--  
-<div class="text-center mt-4">
-    <a href="#" class="btn btn-primary">المزيد من الأخبار</a>
-</div> -->
-
-
-
-
-
-<!-- الخبر الرئيسي -->
-
-<!-- <div class="row g-3 mb-4">
-    <div class="col-md-8">
-        <div class="card border-0 shadow-sm h-100">
-            <img src="assets/images/main-news.jpg" class="card-img-top rounded-0" alt="...">
-            <div class="card-body">
-                <h4 class="card-title text-primary">عنوان الخبر العاجل هنا كما في موقع العربية</h4>
-                <p class="card-text">وصف قصير لهذا الخبر المهم جداً الذي يظهر في أعلى الصفحة.</p>
-                <a href="news/single.php?id=1" class="btn btn-primary btn-sm">قراءة المزيد</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card border-0 shadow-sm h-100">
-            <img src="assets/images/side-news.jpg" class="card-img-top rounded-0" alt="...">
-            <div class="card-body">
-                <h6 class="card-title">عنوان خبر جانبي</h6>
-                <a href="#" class="btn btn-outline-primary btn-sm">المزيد من الأخبار</a>
-            </div>
-        </div>
-    </div>
+  </marquee>
 </div>
 
 
-<div class="row g-3">
-    <div class="col-md-8">
-        <h5 class="text-primary mb-3 border-bottom pb-2">آخر الأخبار</h5>
-        <div class="row g-3">
-            <?php for ($i = 1; $i <= 4; $i++): ?>
-            <div class="col-md-6">
-                <div class="card border-0 shadow-sm">
-                    <img src="assets/images/news<?= $i ?>.jpg" class="card-img-top rounded-0" alt="...">
-                    <div class="card-body p-3">
-                        <h6 class="card-title">عنوان الخبر <?= $i ?></h6>
-                        <p class="card-text small">وصف قصير لخبر <?= $i ?>...</p>
-                        <a href="news/single.php?id=<?= $i ?>" class="btn btn-primary btn-sm">قراءة</a>
-                    </div>
-                </div>
-            </div>
-            <?php endfor; ?>
-        </div>
-    </div>
+<!--  نموذج البحث -->
+<form method="GET" action="" class="row g-3 align-items-end mb-4">
 
-    <div class="col-md-4">
-        <div class="card mb-3 border-0 shadow-sm">
-            <div class="card-header bg-white text-primary fw-bold">
-                الأكثر مشاهدة
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    عنوان خبر 1
-                    <span class="badge bg-primary rounded-pill">1</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    عنوان خبر 2
-                    <span class="badge bg-primary rounded-pill">2</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    عنوان خبر 3
-                    <span class="badge bg-primary rounded-pill">3</span>
-                </li>
-            </ul>
-        </div>
-
-        <div class="card border-0 shadow-sm">
-            <img src="assets/images/advertisement.jpg" class="card-img rounded-0" alt="إعلان">
-        </div>
-    </div>
-</div> -->
-
-
-
-
-<!-- الخبر الرئيسي -->
-
-<div class="row g-3 mb-4">
-  <div class="col-md-8">
-    <div class="card border-0 shadow-sm h-100">
-      <img src="assets/images/main-news.jpg" class="card-img-top rounded-0" alt="...">
-      <div class="card-body">
-        <h4 class="card-title text-primary">عنوان الخبر العاجل هنا</h4>
-        <p class="card-text">وصف قصير لهذا الخبر المهم جداً الذي يظهر في أعلى الصفحة.</p>
-        <a href="news/single.php?id=1" class="btn btn-primary btn-sm">قراءة المزيد</a>
-      </div>
-    </div>
-  </div>
+  <!-- حقل البحث -->
   <div class="col-md-4">
-    <div class="card border-0 shadow-sm h-100">
-      <img src="assets/images/side-news.jpg" class="card-img-top rounded-0" alt="...">
-      <div class="card-body">
-        <h6 class="card-title">عنوان خبر جانبي</h6>
-        <a href="#" class="btn btn-outline-success btn-sm">المزيد من الأخبار</a>
-      </div>
-    </div>
+    <label for="q" class="form-label">كلمة مفتاحية</label>
+    <input type="text" class="form-control" id="q" name="q" placeholder="ابحث عن مقال..." value="<?= htmlspecialchars($_GET['q'] ?? '') ?>">
   </div>
-</div>
+
+  <!-- تحديد القسم -->
+  <div class="col-md-3">
+    <label for="category_id" class="form-label">القسم</label>
+    <select name="category_id" id="category_id" class="form-select">
+      <option value="">كل الأقسام</option>
+      <?php foreach ($categories as $cat): ?>
+        <option value="<?= $cat['id'] ?>" <?= ($_GET['category_id'] ?? '') == $cat['id'] ? 'selected' : '' ?>>
+          <?= htmlspecialchars($cat['name']) ?>
+        </option>
+      <?php endforeach; ?>
+    </select>
+  </div>
+
+  <!-- تحديد الكاتب -->
+  <div class="col-md-3">
+    <label for="author_id" class="form-label">الكاتب</label>
+    <select name="author_id" id="author_id" class="form-select">
+      <option value="">كل الكُتّاب</option>
+      <?php foreach ($authors as $auth): ?>
+        <option value="<?= $auth['id'] ?>" <?= ($_GET['author_id'] ?? '') == $auth['id'] ? 'selected' : '' ?>>
+          <?= htmlspecialchars($auth['full_name']) ?>
+        </option>
+      <?php endforeach; ?>
+    </select>
+  </div>
+
+  <!-- زر البحث -->
+  <div class="col-md-2">
+    <button type="submit" class="btn btn-primary w-100">🔍 بحث</button>
+  </div>
+
+</form>
 
 
+<!--  محتوى الصفحة الرئيسي -->
 <div class="row g-3">
+  <!--  المقالات -->
   <div class="col-md-8">
     <h5 class="text-success mb-3 border-bottom pb-2">آخر الأخبار</h5>
     <div class="row g-3">
-      <?php for ($i = 1; $i <= 6; $i++): ?>
+      
+      <?php foreach ($articles as $article): ?>
+
         <div class="col-md-6">
           <div class="card border-0 shadow-sm">
-            <img src="assets/images/news<?= $i ?>.jpg" class="card-img-top rounded-0" alt="...">
+            <img src="assets/images/news/<?= htmlspecialchars($article['image_path']) ?>" class="card-img-top rounded-0 img-fluid" loading="lazy" alt="<?= htmlspecialchars($article['title']) ?>">
             <div class="card-body p-3">
-              <h6 class="card-title">عنوان الخبر <?= $i ?></h6>
-              <p class="card-text small">وصف قصير لخبر <?= $i ?>...</p>
-              <a href="news/single.php?id=<?= $i ?>" class="btn btn-primary btn-sm">قراءة</a>
+              <h6 class="card-title">عنوان الخبر: <?= htmlspecialchars($article['title']) ?></h6>
+              <p class="card-text small"><?= htmlspecialchars($article['summary']) ?></p>
+              <a href="news/single.php?slug=<?= urlencode($article['slug']) ?>" class="btn btn-primary btn-sm">قراءة</a>
+              <div class="mt-2">
+                <a href="<?= 'https://' . $_SERVER['HTTP_HOST'] . '/news/single.php?slug=' . urlencode($article['slug']) ?>
+" class="btn btn-sm btn-outline-primary" target="_blank" rel="noopener noreferrer">
+                  <i class="bi bi-facebook"></i>
+                </a>
+                <a href="<?= 'https://' . $_SERVER['HTTP_HOST'] . '/news/single.php?slug=' . urlencode($article['slug']) ?>
+" class="btn btn-sm btn-outline-info" target="_blank" rel="noopener noreferrer">
+                  <i class="bi bi-twitter-x"></i>
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      <?php endfor; ?>
+      <?php endforeach; ?>
     </div>
   </div>
 
-
+  <!--  الشريط الجانبي -->
   <div class="col-md-4">
+    <!-- الأكثر مشاهدة -->
+  <div class="card mb-3 border-0 shadow-sm">
+  <div class="card-header bg-white text-success fw-bold">الأكثر مشاهدة</div>
+  <ul class="list-group list-group-flush">
+    <?php foreach ($Viewed as $views): ?>
+      <li class="list-group-item d-flex justify-content-between">
+        <a href="news/single.php?slug=news-<?= htmlspecialchars($views['slug']) ?>">
+          <?= htmlspecialchars($views['title']) ?>
+        </a>
+        <span class="badge bg-success"><?= $views['views_count'] ?></span>
+      </li>
+    <?php endforeach; ?>
+  </ul>
+</div>
+
+
+    <!-- التصنيفات -->
     <div class="card mb-3 border-0 shadow-sm">
-      <div class="card-header bg-white text-success fw-bold">
-        الأكثر مشاهدة
-      </div>
+      <div class="card-header bg-white text-primary fw-bold">التصنيفات</div>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          عنوان خبر 1
-          <span class="badge bg-success rounded-pill">1</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          عنوان خبر 2
-          <span class="badge bg-success rounded-pill">2</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          عنوان خبر 3
-          <span class="badge bg-success rounded-pill">3</span>
-        </li>
+        <li class="list-group-item"><a href="category.php?cat=politics">سياسة</a></li>
+        <li class="list-group-item"><a href="category.php?cat=sports">رياضة</a></li>
+        <li class="list-group-item"><a href="category.php?cat=tech">تقنية</a></li>
+        <li class="list-group-item"><a href="archive.php">أرشيف الأخبار</a></li>
       </ul>
     </div>
 
+    <!-- إعلان -->
     <div class="card border-0 shadow-sm">
-      <img src="assets/images/advertisement.jpg" class="card-img rounded-0" alt="إعلان">
+      <img src="assets/images/ad.jpg" class="card-img img-fluid" loading="lazy" alt="إعلان">
     </div>
   </div>
 </div>
 
-
-<?php require('../../parts/footer.php') ?>
+<?php require_once __DIR__ . '../../../parts/footer.php'; ?>

@@ -1,5 +1,26 @@
 
+<?php
+require_once __DIR__ . '../../../vendor/autoload.php';  
+use Core\Session;
+use Core\Flash;
 
+if (!Session::has('user')) {
+    Flash::set('error', 'يجب تسجيل الدخول للوصول إلى هذه الصفحة.');
+    header('Location: /login');
+    exit;
+}
+if (Session::user()['role'] !== 'admin') {
+    Flash::set('error', 'ليس لديك إذن للوصول إلى هذه الصفحة.');
+    header('Location: /');
+    exit;
+}
+
+
+
+
+
+
+?>
   <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">لوحة التحكم</a>

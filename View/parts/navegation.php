@@ -49,7 +49,7 @@ use Core\Flash;
 use Core\Database\Connection;
 use Controllers\users;
 use Core\Session;
-Session::start();
+// Session::start();
 // session_start();
 
 

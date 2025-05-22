@@ -1,7 +1,27 @@
+<?php 
+
+require_once __DIR__ . '../../../../vendor/autoload.php';
+
+use Core\Flash;
+use Core\Session;
+// use Controllers\categories;
+
+$error = Flash::get('error');
+$success = Flash::get('success'); 
+
+if ($error) {
+    echo '<div class="alert alert-danger">' . htmlspecialchars($error) . '</div>';
+}
+
+if ($success) {
+    echo '<div class="alert alert-success">' . htmlspecialchars($success) . '</div>';
+}
+?>
+
+
 <?php require('../../parts/header.php') ?>
 <?php require('../../parts/navegation.php') ?>
 <?php require('../../parts/adminBar.php') ?>
-
 
 
 
@@ -11,7 +31,7 @@
       <h5 class="mb-0">إنشاء قسم جديد</h5>
     </div>
     <div class="card-body">
-      <form action="#" method="post">
+      <form action="../../../Controllers/categories/store.php" method="post">
         <!-- اسم القسم -->
         <div class="mb-3">
           <label for="name" class="form-label">اسم القسم</label>
@@ -32,7 +52,7 @@
         </div>
 
         <!-- زر الإرسال -->
-        <button type="submit" class="btn btn-success">حفظ القسم</button>
+        <button type="submit" class="btn btn-success" name="create">حفظ القسم</button>
         <a href="#" class="btn btn-secondary">إلغاء</a>
       </form>
     </div>
