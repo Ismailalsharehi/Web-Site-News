@@ -17,4 +17,4 @@ require_once __DIR__ . '/../../vendor/autoload.php';
   $stmt->execute();
   $categories = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-require_once __DIR__ . '/../../View/pages/articles/create_view.php';
+require_once __DIR__ . '/../../View/pages/categories/create_view.php';

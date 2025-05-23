@@ -1,5 +1,5 @@
 <?php
-namespace Controllers\users;
+namespace Controllers\articles;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
@@ -43,7 +43,7 @@ try {
     $filteredUsers = $userStmt->fetchAll(PDO::FETCH_ASSOC);
     $user_count = count($filteredUsers);
 
-    var_dump($user_count);
+    // var_dump($user_count);
     // معالجة المقالات
     $articleParams = [];
     $articleSQL = "
@@ -107,3 +107,4 @@ try {
     $categories = [];
 }
 
+require_once __DIR__ . '/../../View/pages/articles/manage_view.php';

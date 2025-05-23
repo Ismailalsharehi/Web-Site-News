@@ -1,59 +1,39 @@
 <?php
 
-
-require_once __DIR__ . '../../../../vendor/autoload.php';
-use Core\Flash;
+// show all data of user
 use Core\Session;
+use Core\Flash;
 
-$success = Flash::get('success');
-if ($success) {
-    echo "<div class='alert alert-success'>" . $success . "</div>";
-} 
-$error = Flash::get('error');
-if ($error) {
-    echo "<div class='alert alert-success'>" . $error . "</div>";
+
+if (!Session::has('user_data')) {
+  Flash::set('error', 'لا توجد بيانات مستخدم.');
+  header('Location: ../../View/pages/users/index_view.php');
+  exit;
 }
-
-if(!Session::has("csrf_token")){
-    $token = bin2hex(random_bytes(32));
-    Session::set("csrf_token", $token);
-  }
-  $token = Session::get("csrf_token");
-
+$user_data = Session::get('user_data') ?? 0;
+$last_login_time = Session::get('last_login_time') ?? 0;
+// var_dump($user_data);  
 ?>
 
-<!-- عرض التفاصيل حسب ألايدي لأي بوست -->
-<?php require('../../parts/header.php')?>
+<?php require_once __DIR__ . '../../../parts/header.php'; ?>
+<?php require_once __DIR__ . '../../../parts/navegation.php'; ?>
+<?php require_once __DIR__ . '../../../parts/adminBar.php'; ?>
 
-<?php require('../../parts/navegation.php')?>
 
+<div class="container">
+  <h1>تفاصيل المستخدم</h1>
+  <div class="user-details">
+    <p><strong>الاسم الكامل:</strong> <?= htmlspecialchars($users['full_name']) ?></p>
+    <p><strong>البريد الإلكتروني:</strong> <?= htmlspecialchars($users['email']) ?></p>
+    <p><strong>تاريخ التسجيل:</strong> <?= htmlspecialchars($users['created_at']) ?></p>
+    <p><strong>آخر تسجيل دخول:</strong> 
+  <?= $last_login_time ? date('Y-m-d H:i:s', $last_login_time) : 'لم يتم تسجيل دخول بعد' ?>
+</p>
 
-<div class="bg-info">
-    <div class="container py-5">
-        <div class="card shadow-sm">
-            <h2 class="text-primary text-center mt-3">تسجيل الدخول</h2>
-            <p class="text-danger text-center">
+  </div>
+  <!-- $login_attempts = Session::get('login_attempts') ?? 0;
+$last_attempt_time = Session::get('last_attempt_time') ?? 0; -->
 
-            </p>
-            <form action="../../../Controllers/users/index.php" method="POST" class="text-center" enctype="multipart/form-data">
-                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($token) ?>">
-            <div class="mb-3">
-                    <label for="" class="form-label">الايميل</label>
-                    <input type="email" name="email" id="" class="form-control">
-                </div>
-                <div class="mb-3">
-                    <label for="" class="form-label">كلمة السر</label>
-                    <input type="password" name="password" id="" class="form-control">
-                </div>
-                <div class="mb-3">
-                    <input type="submit" name="submit" value="ارسال" class="btn btn-danger w-50">
-                </div>
-                    <p>اذا لم يكن لديك حساب <a href=".../../create_view.php">انشاء حساب</a></p>
-            </form>
-        </div>
-    </div>
+  <!-- <a href="../../View/pages/users/index_view.php" class="btn btn-primary">العودة إلى قائمة المستخدمين</a> -->
 </div>
-
-
-
-<?php require('../../parts/footer.php')?>
+<?php require_once __DIR__ . '../../../parts/adminBar.php'; ?>

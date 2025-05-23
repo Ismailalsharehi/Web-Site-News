@@ -13,13 +13,15 @@ use PDO;
 
 use Core\Flash;
 
+var_dump($_GET);
+
 try{
 
   $conn  = Connection::connect();
   $id = intval($_GET['id'] ?? 0);
   if ($id <= 0) {
     Flash::set('error', 'رقم التصنيف غير صالح.');
-    header('Location: ../../View/pages/categories/index_view.php');
+    header('Location: index.php');
     exit;
   }
   // جلب التصنيف
@@ -29,18 +31,18 @@ try{
   $category = $stmt->fetch(PDO::FETCH_ASSOC);
   if (!$category) {
     Flash::set('error', 'التصنيف غير موجود.');
-    header('Location: ../../View/pages/categories/index_view.php');
+    header('Location: index.php');
     exit;
   }
   
 
+  require_once __DIR__ . '/../../View/pages/categories/edit_view.php';
 
 
 
 } catch (PDOException $e){
   Flash::set('error', 'خطأ في الاتصال بقاعدة البيانات: ' . htmlspecialchars($e->getMessage()));
 }
-
 
 
 

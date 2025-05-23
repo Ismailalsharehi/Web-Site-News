@@ -7,13 +7,13 @@ $error = Flash::get('error');
 $success = Flash::get('success');
 
 // جلب الأقسام من قاعدة البيانات
-require('../../../Controllers/categories/manage.php');
+// require('../../../Controllers/categories/manage.php');
 
 ?>
 
-<?php require('../../parts/header.php') ?>
-<?php require('../../parts/navegation.php') ?>
-<?php require('../../parts/adminBar.php') ?>
+<?php require_once __DIR__ . '../../../parts/header.php'; ?>
+<?php require_once __DIR__ . '../../../parts/navegation.php'; ?>
+<?php require_once __DIR__ . '../../../parts/adminBar.php'; ?>
 
 <div class="bg-light py-5">
   <div class="container">
@@ -28,7 +28,7 @@ require('../../../Controllers/categories/manage.php');
     <!-- العنوان وزر الإضافة -->
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h4>إدارة الأقسام</h4>
-      <a href="./create_view.php" class="btn btn-success">
+      <a href="create.php" class="btn btn-success">
         <i class="bi bi-plus-circle"></i> إضافة قسم جديد
       </a>
     </div>
@@ -71,13 +71,13 @@ require('../../../Controllers/categories/manage.php');
                 <td><?= htmlspecialchars($cat['created_at']) ?></td>
                 <td>
                   <div class="d-flex justify-content-center gap-1">
-                    <a href="../../../Controllers/categories/show.php?id=<?= $cat['id'] ?>" class="btn btn-sm btn-info text-white">
+                    <a href="show.php?id=<?= $cat['id'] ?>" class="btn btn-sm btn-info text-white">
                       <i class="bi bi-eye"></i> عرض
                     </a>
-                    <a href="../../../Controllers/categories/edit.php?id=<?= $cat['id'] ?>" class="btn btn-sm btn-warning">
+                    <a href="edit.php?id=<?= $cat['id'] ?>" class="btn btn-sm btn-warning" name="edit">
                       <i class="bi bi-pencil-square"></i> تعديل
                     </a>
-                    <form action="../../../Controllers/categories/delete.php" method="POST" onsubmit="return confirm('هل أنت متأكد من حذف هذا القسم؟');">
+                    <form action="delete.php" method="POST" onsubmit="return confirm('هل أنت متأكد من حذف هذا القسم؟');">
                       <input type="hidden" name="id" value="<?= $cat['id'] ?>">
                       <button type="submit" class="btn btn-sm btn-danger" name="delete">
                         <i class="bi bi-trash"></i> حذف
@@ -109,4 +109,4 @@ require('../../../Controllers/categories/manage.php');
   </div>
 </div>
 
-<?php require('../../parts/footer.php') ?>
+<?php require_once __DIR__ . '../../../parts/footer.php'; ?>

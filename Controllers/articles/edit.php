@@ -8,14 +8,18 @@ use PDO;
 use PDOException;
 use Core\Flash;
 
+
+use Core\Session;
+
+$db = Connection::connect();
+// var_dump($_GET);
 try {
-  $db = Connection::connect();
 
   $id = intval($_GET['id'] ?? 0);
-
+  
   if ($id <= 0) {
     Flash::set('error', 'رقم المقال غير صالح.');
-    header('Location: ../../View/pages/articles/index.php');
+    header('Location: index.php');
     exit;
   }
 
@@ -27,7 +31,7 @@ try {
 
   if (!$article) {
     Flash::set('error', 'المقال غير موجود.');
-    header('Location: ../../View/pages/articles/index.php');
+    header('Location: index.php');
     exit;
   }
 
@@ -42,6 +46,7 @@ try {
 
 } catch (PDOException $e) {
   Flash::set('error', 'خطأ في الاتصال: ' . $e->getMessage());
+  
   header('Location: ../../View/pages/articles/index.php');
   exit;
 }

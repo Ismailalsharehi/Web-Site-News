@@ -1,7 +1,6 @@
 <?php
 
 require_once __DIR__ . '../../../../vendor/autoload.php';
-// require_once __DIR__ . '../../../../index.php';
 
 use Core\Flash;
 use Core\Database\Connection;
@@ -10,49 +9,51 @@ use Controllers\articles;
 $error = Flash::get('error');
 $success = Flash::get('success');
 
-if ($error) {
-  echo '<div class="alert alert-danger">' . htmlspecialchars($error) . '</div>';
-} elseif ($success) {
-  echo '<div class="alert alert-success">' . htmlspecialchars($success) . '</div>';
-}
+// require('../../../Controllers/articles/manage.php');
 
-
-require('../../../Controllers/articles/manage.php');
-
-// var_dump($articles);
-// echo '<pre>'; 
-//  var_dump($articles);
-
-// echo '</pre>';
 ?>
 
-<?php require('../../parts/header.php') ?>
-<?php require('../../parts/navegation.php') ?>
-<?php require('../../parts/adminBar.php') ?>
+<?php require_once __DIR__ . '../../../parts/header.php'; ?>
+<?php require_once __DIR__ . '../../../parts/navegation.php'; ?>
+<?php require_once __DIR__ . '../../../parts/adminBar.php'; ?>
 
-<div class="bg-light">
-  <div class="container mt-5">
 
-    <!-- العنوان وزر الإضافة -->
+<div class="bg-light py-5">
+  <div class="container">
+    <!-- التنبيهات -->
+    <?php if ($error): ?>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <?= htmlspecialchars($error) ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <?php elseif ($success): ?>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <?= htmlspecialchars($success) ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <?php endif; ?>
+
+    <!-- عنوان الصفحة وزر الإضافة -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-      <h4>إدارة المقالات</h4>
-      <a href="./create_view.php" class="btn btn-success">
-        + <i class="bi bi-file-earmark-plus"></i> إضافة مقال جديد
+      <h2 class="fw-bold"> إدارة المقالات</h2>
+      <a href="create.php" class="btn btn-success btn-lg shadow">
+         <i class="bi bi-file-earmark-plus"></i> إضافة مقال
       </a>
     </div>
-    <div class="alert alert-info">
-      إجمالي المقالات: <strong><?= htmlspecialchars($articles_count)?></strong>
 
-      
+    <!-- ملخص -->
+    <div class="alert alert-info">
+      <strong>📄 إجمالي المقالات:</strong> <?= htmlspecialchars($articles_count) ?>
     </div>
 
-    <!--  البحث والفلترة -->
-    <form method="GET" class="row g-3 mb-3">
+    <!-- نموذج البحث والفلترة -->
+    <form method="GET" class="row g-3 align-items-end mb-4">
       <div class="col-md-4">
-        <input type="text" name="search" class="form-control" placeholder="🔍 ابحث بالعنوان أو الكاتب..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+        <label class="form-label">ابحث</label>
+        <input type="text" name="search" class="form-control" placeholder="🔍 العنوان أو الكاتب..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
       </div>
-
       <div class="col-md-3">
+        <label class="form-label">التصنيف</label>
         <select name="category_id" class="form-select">
           <option value="">جميع التصنيفات</option>
           <?php foreach ($categories as $cat): ?>
@@ -62,8 +63,8 @@ require('../../../Controllers/articles/manage.php');
           <?php endforeach; ?>
         </select>
       </div>
-
       <div class="col-md-3">
+        <label class="form-label">الحالة</label>
         <select name="status" class="form-select">
           <option value="">كل الحالات</option>
           <option value="published" <?= ($_GET['status'] ?? '') === 'published' ? 'selected' : '' ?>>منشور</option>
@@ -71,15 +72,16 @@ require('../../../Controllers/articles/manage.php');
           <option value="archived" <?= ($_GET['status'] ?? '') === 'archived' ? 'selected' : '' ?>>مؤرشف</option>
         </select>
       </div>
-
       <div class="col-md-2">
-        <button class="btn btn-primary w-100" type="submit">بحث</button>
+        <button class="btn btn-primary w-100" type="submit">
+          <i class="bi bi-search"></i> بحث
+        </button>
       </div>
     </form>
 
     <!-- جدول المقالات -->
-    <div class="table-responsive">
-      <table class="table table-bordered table-striped align-middle text-center bg-white">
+    <div class="table-responsive shadow-sm">
+      <table class="table table-hover align-middle text-center bg-white border rounded">
         <thead class="table-dark">
           <tr>
             <th>#</th>
@@ -100,9 +102,9 @@ require('../../../Controllers/articles/manage.php');
               <td><?= $index + 1 ?></td>
               <td>
                 <?php if (!empty($article['image_path'])): ?>
-                  <img src="images/<?= $article['image_path'] ?>" alt="صورة المقال" style="max-width: 200px;">
+                  <img src="../../views/media/images/<?= $article['image_path']; ?>" alt="صورة" class="img-thumbnail" style="max-width: 80px;">
                 <?php else: ?>
-                  <span class="text-muted">لا توجد صورة</span>
+                  <span class="text-muted">لا توجد</span>
                 <?php endif; ?>
               </td>
               <td><?= htmlspecialchars($article['title']) ?></td>
@@ -119,29 +121,18 @@ require('../../../Controllers/articles/manage.php');
               <td><?= $article['views_count'] ?></td>
               <td><?= $article['published_at'] ? date('Y-m-d', strtotime($article['published_at'])) : '—' ?></td>
               <td>
-
-                <div>
-                  <form action="../../../Controllers/articles/edit.php" method="GET">
-                    <input type="hidden" name="id" value="<?= htmlspecialchars($article['id']) ?>">
-                    <button type="submit" class="btn btn-sm btn-warning">
-                      <i class="bi bi-pencil-square"></i> تعديل
-                    </button>
+                <div class="btn-group" role="group">
+                  <form action="show.php" method="GET">
+                    <input type="hidden" name="slug" value="<?= htmlspecialchars($article['slug']) ?>">
+                    <button type="submit" class="btn btn-sm btn-outline-primary" title="عرض"><i class="bi bi-eye"></i></button>
                   </form>
-                </div>
-
-                <div>
-                  <form action="../../../Controllers/articles/show.php" method="GET">
+                  <form action="edit.php" method="GET">
                     <input type="hidden" name="id" value="<?= htmlspecialchars($article['id']) ?>">
-                    <button type="submit" class="btn btn-sm btn-warning">
-                      <i class="bi bi-pencil-square"></i> عرض
-                    </button>
+                    <button type="submit" class="btn btn-sm btn-outline-warning" title="تعديل"><i class="bi bi-pencil-square"></i></button>
                   </form>
-                </div>
-
-                <div>
-                  <form action="../../../Controllers/articles/delete.php" method="POST" onsubmit="return confirm('هل أنت متأكد من الحذف؟');" class="d-inline">
+                  <form action="delete.php" method="POST" onsubmit="return confirm('هل أنت متأكد من الحذف؟');">
                     <input type="hidden" name="article_id" value="<?= $article['id'] ?>">
-                    <button type="submit" class="btn btn-sm btn-danger">🗑 حذف</button>
+                    <button type="submit" class="btn btn-sm btn-outline-danger" title="حذف"><i class="bi bi-trash"></i></button>
                   </form>
                 </div>
               </td>
@@ -152,11 +143,11 @@ require('../../../Controllers/articles/manage.php');
     </div>
 
     <?php if (empty($articles)): ?>
-      <div class="alert alert-warning text-center">لا توجد نتائج مطابقة للبحث.</div>
+      <div class="alert alert-warning text-center mt-4">لا توجد نتائج.</div>
     <?php endif; ?>
 
-    <!-- التنقل بين الصفحات  -->
-    <nav>
+    <!-- التنقل بين الصفحات -->
+    <nav class="mt-4">
       <ul class="pagination justify-content-center">
         <li class="page-item disabled"><a class="page-link" href="#">السابق</a></li>
         <li class="page-item active"><a class="page-link" href="#">1</a></li>
@@ -164,7 +155,6 @@ require('../../../Controllers/articles/manage.php');
         <li class="page-item"><a class="page-link" href="#">التالي</a></li>
       </ul>
     </nav>
-
   </div>
 </div>
 

@@ -28,11 +28,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_categories']))
 
         if ($stmt->execute()) {
             Flash::set('success', 'تم تحديث التصنيف بنجاح');
+            header('Location: manage.php');
         } else {
             Flash::set('error', 'فشل في تحديث التصنيف');
         }
 
-        header('Location: ../../View/pages/categories/index_view.php');
+        header('Location: manage.php');
         exit;
 
     } catch (PDOException $e) {

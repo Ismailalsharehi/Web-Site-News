@@ -8,7 +8,7 @@ use Core\Database\Connection;
 use PDOException;
 use PDO;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = htmlspecialchars($_POST['name']);
     $description = htmlspecialchars($_POST['description']);
     $slug = htmlspecialchars($_POST['slug']);

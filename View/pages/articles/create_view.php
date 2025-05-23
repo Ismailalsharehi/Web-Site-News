@@ -2,9 +2,9 @@
 
  require_once __DIR__ . '../../../../vendor/autoload.php';
 
+  use Core\Session;
 use Core\Flash;
-use Core\Session;
- use Controllers\articles;
+//  use Controllers\articles;
 
 $error = Flash::get('error');
 $success = Flash::get('success');
@@ -16,20 +16,21 @@ $success = Flash::get('success');
     echo '<div class="alert alert-danger">' . htmlspecialchars($success) . '</div>';
  } 
 
-require('../../../Controllers/articles/create.php');
+// require('../../../Controllers/articles/store.php');  
 
-  
+  // var_dump($categories);
 ?>
 
-<?php require('../../parts/header.php' ) ?>
-<?php require('../../parts/navegation.php') ?>
-<?php require('../../parts/adminBar.php') ?>
+<?php require_once __DIR__ . '../../../parts/header.php'; ?>
+
+<?php require_once __DIR__ . '../../../parts/navegation.php'; ?>
+<?php require_once __DIR__ . '../../../parts/adminBar.php'; ?>
 
 
 <div class="container mt-5">
   <h2>إضافة مقال جديد</h2>
 
-  <form action="../../../Controllers/articles/create.php" method="POST" enctype="multipart/form-data">
+  <form action="store.php" method="POST" enctype="multipart/form-data">
     <div class="row">
       <div class="col-md-8">
         <div class="mb-3">

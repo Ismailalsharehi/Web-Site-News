@@ -1,10 +1,26 @@
-
 <?php
-use Core\Session;
-use Core\Flash;
-use Core\Database\Connection;
-?>
+// require_once __DIR__ . '../../../../vendor/autoload.php';
 
+use Core\Session;
+  use Core\Flash;
+use Controllers\categories;
+
+// $success = new Flash();
+$error = Flash::get('error');
+$success = Flash::get('success');
+// var_dump($category);
+
+if ($error) {
+  echo '<div class="alert alert-danger">' . htmlspecialchars($error) . '</div>';
+}
+elseif ($success) {
+    echo '<div class="alert alert-success">' . htmlspecialchars($error) . '</div>';
+  }
+
+
+  
+  // var_dump($categories['slug']);
+?>
 
 <?php require_once __DIR__ . '../../../parts/header.php'; ?>
 
@@ -19,7 +35,7 @@ use Core\Database\Connection;
       <h5 class="mb-0">تعديل القسم</h5>
     </div>
     <div class="card-body">
-      <form action="/ismail/website-news/Controllers/categories/update.php" method="post">
+      <form action="update.php" method="POST">
         <!-- حقل مخفي لرقم القسم (id) -->
          
         <input type="hidden" name="id" value=" <?= htmlspecialchars($category['id']) ?>">
@@ -39,7 +55,7 @@ use Core\Database\Connection;
         <!-- الوصف -->
         <div class="mb-3">
           <label for="description" class="form-label">الوصف</label>
-          <textarea class="form-control" id="description" name="description" rows="4"> value="<?= htmlspecialchars($category['description'])?>"  </textarea>
+          <textarea class="form-control" id="description" name="description" rows="4"> <?= htmlspecialchars($category['description'])?></textarea>
         </div>
 
         <!-- أزرار -->

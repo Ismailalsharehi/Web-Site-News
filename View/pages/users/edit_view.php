@@ -1,10 +1,11 @@
 <?php
-  use Core\Flash;
+use Core\Session;
+use Core\Flash;
 use Controller\users;
 
 $error = Flash::get('error');
-$success = new Flash();
-var_dump($success);
+// $success = new Flash();
+$success = Flash::get('success');
 
 if ($error) {
   echo '<div class="alert alert-danger">' . htmlspecialchars($error) . '</div>';
@@ -37,7 +38,7 @@ elseif ($success) {
       تعديل بيانات المستخدم
     </div>
     <div class="card-body p-4">
-      <form action="/ismail/website-news/Controllers/users/update.php" method="POST" novalidate>
+      <form action="update.php" method="POST" novalidate>
         <input type="hidden" name="id" value="<?= htmlspecialchars($user['id']) ?>">
         <div class="mb-3">
           <label for="full_name" class="form-label">الاسم الكامل</label>
@@ -77,7 +78,7 @@ elseif ($success) {
           <div class="invalid-feedback">يرجى اختيار دور.</div>
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">تحديث البيانات </button>
+        <button type="submit" class="btn btn-primary w-100" name="update_user">تحديث البيانات </button>
       </form>
     </div>
   </div>

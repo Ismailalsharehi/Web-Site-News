@@ -15,7 +15,7 @@ try{
   if($_SERVER['REQUEST_METHOD'] === 'POST' && isset ($_POST['delete'])){
     if ($id <= 0) {
       Flash::set('error', 'رقم التصنيف غير صالح.');
-      header('Location: ../../View/pages/categories/delete_view.php');
+      header("Location: " . $_SERVER["HTTP_REFERER"]);
       exit;
     }
     // جلب التصنيف
@@ -25,7 +25,7 @@ try{
     $category = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$category) {
       Flash::set('error', 'التصنيف غير موجود.');
-      header('Location: ../../View/pages/categories/index_view.php');
+      header("Location: " . $_SERVER["HTTP_REFERER"]);
       exit;
     }
 
@@ -34,11 +34,11 @@ try{
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     if($stmt->execute()){
       Flash::set('success', 'تم حذف التصنيف بنجاح');
-      header('Location: ../../View/pages/categories/index_view.php');
+      header("Location: " . $_SERVER["HTTP_REFERER"]);
       exit;
     }else{
       Flash::set('error', 'فشل في حذف التصنيف');
-      header('Location: ../../View/pages/categories/index_view.php');
+      header("Location: " . $_SERVER["HTTP_REFERER"]);
       exit;
     }
   }

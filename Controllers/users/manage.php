@@ -8,12 +8,12 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 
 use Core\Session;
 Session::start();
-use Core\Database\Connection;
-use PDO;
-use PDOStatement;
-use PDOException;
 
 use Core\Flash;
+
+use Core\Database\Connection;
+use PDO;
+use PDOException;
 
 
 
@@ -80,5 +80,5 @@ $user_count = count($filteredUsers);
 // $stmt->execute();
 // $inactive_users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-
+require_once __DIR__ . '/../../View/pages/users/manage_view.php';
  

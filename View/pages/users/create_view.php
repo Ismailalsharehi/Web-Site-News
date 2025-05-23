@@ -1,7 +1,7 @@
 <?php
 
 
-require_once __DIR__ . '../../../../vendor/autoload.php';
+// require_once __DIR__ . '../../../../vendor/autoload.php';
 use Core\Flash;
 
 $error = Flash::get('error');
@@ -10,9 +10,10 @@ if ($error) {
 }
 ?>
 
-<?php require('../../parts/header.php') ?>
-<?php require('../../parts/navegation.php') ?>
-<?php require('../../parts/adminBar.php') ?>
+<?php require_once __DIR__ . '../../../parts/header.php'; ?>
+
+<?php require_once __DIR__ . '../../../parts/navegation.php'; ?>
+<?php require_once __DIR__ . '../../../parts/adminBar.php'; ?>
 
 
 <!-- // require_once __DIR__ . '../../../../Model/users.php';
@@ -26,7 +27,7 @@ if ($error) {
       إنشاء حساب جديد
     </div>
     <div class="card-body p-4">
-      <form action="../../../Controllers/users/create.php" method="POST" novalidate>
+      <form action="store.php" method="POST" novalidate>
         
         <div class="mb-3">
           <label for="full_name" class="form-label">الاسم الكامل</label>
@@ -66,7 +67,7 @@ if ($error) {
           <div class="invalid-feedback">يرجى اختيار دور.</div>
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">إنشاء الحساب</button>
+        <button type="submit" class="btn btn-primary w-100" name="create">إنشاء الحساب</button>
       </form>
     </div>
   </div>

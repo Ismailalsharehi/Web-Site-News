@@ -1,5 +1,5 @@
 <?php
-namespace Controllers\users;
+namespace Controllers\articles;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 

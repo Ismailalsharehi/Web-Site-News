@@ -1,13 +1,14 @@
 <?php
 // require_once __DIR__ . '../../../../vendor/autoload.php';
 
+use Core\Session;
   use Core\Flash;
-  use Core\Session;
 use Controllers\articles;
 
+// $success = new Flash();
 $error = Flash::get('error');
-$success = new Flash();
-var_dump($success);
+$success = Flash::get('success');
+// var_dump($article);
 
 if ($error) {
   echo '<div class="alert alert-danger">' . htmlspecialchars($error) . '</div>';
@@ -18,7 +19,7 @@ elseif ($success) {
 
 
   
-  var_dump($categories['slug']);
+  // var_dump($categories['slug']);
 ?>
 
 
@@ -31,7 +32,7 @@ elseif ($success) {
 
   
 
-  <form action="/ismail/website-news/Controllers/articles/update.php" method="POST" enctype="multipart/form-data">
+  <form action="update.php" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="id" value="<?= $article['id'] ?>">
     
     <div class="row">
@@ -102,10 +103,7 @@ elseif ($success) {
             </div>
 
             <input type="hidden" name="user_id" value="<?= Session::get('user_id', 1) ?>">
-
             
-              
-
           </div>
         </div>
       </div>
@@ -115,4 +113,4 @@ elseif ($success) {
   </form>
 </div>
 
-<?php require('../../parts/footer.php') ?>
+<?php require_once __DIR__ . '../../../parts/footer.php'; ?>

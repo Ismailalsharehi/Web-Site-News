@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_article'])) {
 
     if ($stmt->execute()) {
         Flash::set('success', 'تم تحديث المقال بنجاح.');
-        header("Location: ../../View/pages/articles/manage_view.php");
+        header("Location: manage.php");
     exit;
     } else {
         Flash::set('error', 'حدث خطأ أثناء تحديث المقال.');

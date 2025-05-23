@@ -1,4 +1,3 @@
-
 <?php
 
 require_once __DIR__ . '../../../../vendor/autoload.php';
@@ -7,28 +6,27 @@ use Core\Flash;
 use Core\Database\Connection;
 use Controllers\users;
 use Core\Session;
+
 Session::start();
 
 
 
-// $usere = $_SESSION['user_data'];
 $user = Session::get('user_data');
 
- $error = Flash::get('error');
- $success = Flash::get('success');
- if ($error) {
-     echo '<div class="alert alert-danger">' . htmlspecialchars($error) . '</div>';
- }
- else{
-     echo '<div class="alert alert-danger">' . htmlspecialchars($success) . '</div>';
+$error = Flash::get('error');
+$success = Flash::get('success');
+if ($error) {
+  echo '<div class="alert alert-danger">' . htmlspecialchars($error) . '</div>';
+} else {
+  echo '<div class="alert alert-danger">' . htmlspecialchars($success) . '</div>';
 }
-require('../../../Controllers/users/manage.php');
- ?>
- 
+// require('../../../Controllers/users/manage.php');
+?>
 
-<?php require('../../parts/header.php') ?>
-<?php require('../../parts/navegation.php') ?>
-<?php require('../../parts/adminBar.php') ?>
+
+<?php require_once __DIR__ . '../../../parts/header.php'; ?>
+<?php require_once __DIR__ . '../../../parts/navegation.php'; ?>
+<?php require_once __DIR__ . '../../../parts/adminBar.php'; ?>
 
 
 <div class="bg-light">
@@ -39,19 +37,19 @@ require('../../../Controllers/users/manage.php');
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h4>إدارة المستخدمين</h4>
 
-      <a href="./create_view.php" class="btn btn-primary" data-bs-target="#addUserModal">+ <i class="bi bi-person-plus"></i> إضافة مستخدم</a>
-    
-    </div> 
+      <a href="create.php" class="btn btn-primary" data-bs-target="#addUserModal">+ <i class="bi bi-person-plus"></i> إضافة مستخدم</a>
+
+    </div>
 
     <!-- الإحصائيات -->
     <div class="alert alert-info">
-      إجمالي المستخدمين: <strong><?= htmlspecialchars($user_count)?></strong>
+      إجمالي المستخدمين: <strong><?= htmlspecialchars($user_count) ?></strong>
 
-      
+
     </div>
 
     <!-- البحث والفلترة -->
-     
+
     <form method="get" class="row g-3 mb-3">
       <div class="col-md-4">
         <input type="text" name="search" class="form-control" placeholder="ابحث بالاسم أو البريد..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
@@ -60,8 +58,8 @@ require('../../../Controllers/users/manage.php');
         <select class="form-select" name="role">
           <option value="">جميع المستخدمين</option>
           <option value="admin" <?= isset($_GET['role']) && $_GET['role'] === 'admin' ? 'selected' : '' ?>>مدير</option>
-      <option value="author" <?= isset($_GET['role']) && $_GET['role'] === 'author' ? 'selected' : '' ?>>كاتب</option>
-      <option value="user" <?= isset($_GET['role']) && $_GET['role'] === 'user' ? 'selected' : '' ?>>مستخدم عادي</option>
+          <option value="author" <?= isset($_GET['role']) && $_GET['role'] === 'author' ? 'selected' : '' ?>>كاتب</option>
+          <option value="user" <?= isset($_GET['role']) && $_GET['role'] === 'user' ? 'selected' : '' ?>>مستخدم عادي</option>
         </select>
       </div>
 
@@ -78,68 +76,76 @@ require('../../../Controllers/users/manage.php');
       </div>
     </form>
 
-    
-
-<!-- جدول المستخدمين -->
-<div class="table-responsive">
-  <table class="table table-striped table-bordered align-middle text-center bg-white">
-    <thead class="table-light">
-      <tr>
-        <th>#</th>
-        <th>الاسم</th>
-        <th>البريد</th>
-        <th>الدور</th>
-        <th>الحالة</th>
-        <th>عدد المقالات</th>
-        <th>تاريخ التسجيل</th>
-        <th>آخر دخول</th>
-        <th>الإجراءات</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php foreach ($filteredUsers as $index=> $user):?>
-      <tr>
-        <td><?= $index+1 ?></td>
-        <td> <?= htmlspecialchars($user['full_name'])?></td>
-        <td><?= htmlspecialchars($user['email'])?></td>
-        <td><?= htmlspecialchars($user['role'])?></td>
-        <td><span class="badge bg-success">نشط</span></td>
-        <td>12</td>
-        <td><?= htmlspecialchars($user['created_at'])?></td>
-        <td><?= htmlspecialchars($user['updated_at'])?></td> 
-        <td>
-          <div class="d-flex justify-content-center gap-2 flex-wrap">
-          
-            <!-- فورم التعديل -->
-            <div>
-              <form action="../../../Controllers/users/edit.php" method="GET">
-                <input type="hidden" name="id" value="<?= htmlspecialchars($user['id']) ?>">
-                <button type="submit" class="btn btn-sm btn-warning">
-                  <i class="bi bi-pencil-square"></i> تعديل
-                </button>
-              </form>
-            </div>
-
-            <!-- فورم الحذف -->
-            <div>
-              <form action="../../../Controllers/users/delete.php" method="POST" onsubmit="return confirm('هل أنت متأكد من الحذف؟');">
-                <input type="hidden" name="user_id" value="<?= htmlspecialchars($user['id']) ?>">
-              <button type="submit" class="btn btn-sm btn-danger">
-                  <i class="bi bi-trash"></i> حذف
-                </button>
-              </form>
-            </div>
-
-          </div>
-        </td>
-      </tr>
 
 
-      <?php endforeach; ?>
-      <!-- صفوف   أخرى -->
-    </tbody>
-  </table>
-</div>
+    <!-- جدول المستخدمين -->
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered align-middle text-center bg-white">
+        <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>الاسم</th>
+            <th>البريد</th>
+            <th>الدور</th>
+            <th>الحالة</th>
+            <th>عدد المقالات</th>
+            <th>تاريخ التسجيل</th>
+            <th>آخر دخول</th>
+            <th>الإجراءات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($filteredUsers as $index => $user): ?>
+            <tr>
+              <td><?= $index + 1 ?></td>
+              <td> <?= htmlspecialchars($user['full_name']) ?></td>
+              <td><?= htmlspecialchars($user['email']) ?></td>
+              <td><?= htmlspecialchars($user['role']) ?></td>
+              <td><span class="badge bg-success">نشط</span></td>
+              <td>12</td>
+              <td><?= htmlspecialchars($user['created_at']) ?></td>
+              <td><?= htmlspecialchars($user['updated_at']) ?></td>
+              <td>
+                <div class="d-flex justify-content-center gap-2 flex-wrap">
+
+                  <!-- فورم التعديل -->
+                  <div>
+                    <form action="edit.php" method="GET">
+                      <input type="hidden" name="id" value="<?= htmlspecialchars($user['id']) ?>">
+                      <button type="submit" class="btn btn-sm btn-warning">
+                        <i class="bi bi-pencil-square"></i> تعديل
+                      </button>
+                    </form>
+                  </div>
+
+                  <!-- فورم الحذف -->
+                  <div>
+                    <form action="delete.php" method="POST" onsubmit="return confirm('هل أنت متأكد من الحذف؟');">
+                      <input type="hidden" name="user_id" value="<?= htmlspecialchars($user['id']) ?>">
+                      <button type="submit" class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash"></i> حذف
+                      </button>
+                    </form>
+                  </div>
+                  <!-- فورم عرض التفاصيل -->
+                  <div>
+                    <form action="show.php" method="GET">
+                      <input type="hidden" name="id" value="<?= htmlspecialchars($user['id']) ?>">
+                      <button type="submit" class="btn btn-sm btn-info" name="show">
+                        <i class="bi bi-eye"></i> عرض
+                      </button>
+                    </form>
+
+                  </div>
+              </td>
+            </tr>
+
+
+          <?php endforeach; ?>
+          <!-- صفوف   أخرى -->
+        </tbody>
+      </table>
+    </div>
 
 
     <!-- رسالة عدم وجود نتائج -->
@@ -159,7 +165,7 @@ require('../../../Controllers/users/manage.php');
 
   </div>
 
-  
+
 
   <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
 </div>
@@ -168,4 +174,4 @@ require('../../../Controllers/users/manage.php');
 
 
 
-<?php require('../../parts/footer.php') ?>
+<?php require_once __DIR__ . '../../../parts/footer.php'; ?>

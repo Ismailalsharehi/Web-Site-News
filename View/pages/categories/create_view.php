@@ -19,9 +19,10 @@ if ($success) {
 ?>
 
 
-<?php require('../../parts/header.php') ?>
-<?php require('../../parts/navegation.php') ?>
-<?php require('../../parts/adminBar.php') ?>
+<?php require_once __DIR__ . '../../../parts/header.php'; ?>
+
+<?php require_once __DIR__ . '../../../parts/navegation.php'; ?>
+<?php require_once __DIR__ . '../../../parts/adminBar.php'; ?>
 
 
 
@@ -31,7 +32,7 @@ if ($success) {
       <h5 class="mb-0">إنشاء قسم جديد</h5>
     </div>
     <div class="card-body">
-      <form action="../../../Controllers/categories/store.php" method="post">
+      <form action="store.php" method="post">
         <!-- اسم القسم -->
         <div class="mb-3">
           <label for="name" class="form-label">اسم القسم</label>

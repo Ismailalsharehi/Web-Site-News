@@ -29,13 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // تحقق من الحقول الأساسية
   if (empty($id) || empty($full_name) || empty($username) || empty($email)) {
     Flash::set('error', 'يرجى ملء جميع الحقول المطلوبة.');
-    header('Location: ../../View/pages/users/edit_view.php?id='.$id);
+    header('Location: edit.php?id='.$id);
     exit;
   }
 
   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     Flash::set('error', 'يرجى إدخال بريد إلكتروني صالح.');
-    header('Location: ../../View/pages/users/edit_view.php?id='.$id);
+    header('Location: edit.php?id='.$id);
     exit;
   }
 
@@ -50,13 +50,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($password) || !empty($confirm_password)) {
       if (strlen($password) < 6 || strlen($confirm_password) < 6) {
         Flash::set('error', 'كلمة المرور يجب أن تكون 6 أحرف على الأقل.');
-        header('Location: ../../View/pages/users/edit_view.php?id='.$id);
+        header('Location: edit.php?id='.$id);
         exit;
       }
 
       if ($password !== $confirm_password) {
         Flash::set('error', 'كلمات المرور غير متطابقة.');
-        header('Location: ../../View/pages/users/edit_view.php?id='.$id);
+        header('Location: edit.php?id='.$id);
         exit;
       }
 
@@ -106,11 +106,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($result) {
       Flash::set('success', 'تم تحديث بيانات المستخدم بنجاح.');
-      header('Location: ../../View/pages/users/show_view.php');
+      header('Location: manage.php');
       exit;
     } else {
       Flash::set('error', 'حدث خطأ أثناء التحديث.');
-      header('Location: ../../View/pages/users/edit_view.php?id=' . $id);
+      header('Location: manage.php?id='.$id);;
       exit;
     }
   } catch (PDOException $e) {

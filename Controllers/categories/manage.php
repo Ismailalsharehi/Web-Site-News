@@ -43,6 +43,6 @@ try {
 } catch (PDOException $e){
   Flash::set('error', 'خطأ في الاتصال بقاعدة البيانات: ' . htmlspecialchars($e->getMessage()));
 }
-
+require_once __DIR__ . '/../../View/pages/categories/manage_view.php';
 
 
