@@ -32,8 +32,9 @@ elseif ($success) {
 
   
 
-  <form action="update.php" method="POST" enctype="multipart/form-data">
+  <form action="/article_update" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="id" value="<?= $article['id'] ?>">
+    <input type="hidden" name="_method" value="PUT">
     
     <div class="row">
       <div class="col-md-8">
@@ -85,7 +86,7 @@ elseif ($success) {
 
             <div class="mb-3">
               <label for="video_url" class="form-label">رابط الفيديو</label>
-              <input type="url" class="form-control" id="video_url" name="video_url" value="<?= htmlspecialchars($article['video_url']) ?>">
+              <input type="url" class="form-control" id="video_url" name="video_url" value="<?= htmlspecialchars($article['video_url']) ?? '' ?>">
             </div>
 
             <div class="mb-3">

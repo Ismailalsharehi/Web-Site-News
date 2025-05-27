@@ -1,7 +1,7 @@
 
 
 <?php
-//دوال مهمه تستخدم بي كثره
+//دوال مهمه تستخدم ب كثره
 
 function dd($value)
 {
@@ -34,20 +34,6 @@ function abort($code = 404)
 }
 
 
-function authorize($condition, $status = Response::HTTP_FORBIDDEN)
-{
-    if (!$condition) {
-        abort($status);
-    }
-}
-
-function visible($condition, $status = Response::HTTP_FORBIDDEN)
-{
-    if (empty($condition)) {
-        abort($status);
-    }
-}
-
 
 function logIn($user)
 {
@@ -67,8 +53,8 @@ function logOut()
 {
     $_SESSION = [];
     $user['email']  = null;
-    $user['user_id'] = null;
-    $user['type'] = null;
+    $user['user'] = null;
+    $user['role'] = null;
     session_destroy();
 
     $params =  session_get_cookie_params();

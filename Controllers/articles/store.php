@@ -5,10 +5,13 @@ namespace Controllers\articles;
 // if (headers_sent($file, $line)) {
 //     die("Headers already sent in $file on line $line");
 // }
-require_once __DIR__ . '/../../vendor/autoload.php';
+
+var_dump("sdfgbhnj");
 
 use Core\Session;
+
 Session::start();
+
 use Core\Database\Connection;
 use Controllers\Functions\Functions;
 use PDO;
@@ -34,8 +37,8 @@ try {
 } catch (PDOException $e) {
   Flash::set('error', '   فشل الاتصال الان');
   $e->getMessage();
-  // header("Location: " . $_SERVER["HTTP_REFERER"]);
-  // exit;
+  header("Location:/404");
+  exit;
 }
 
 
@@ -47,7 +50,7 @@ try {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_article'])) {
 
 
-  $title        = Functions::cleanInput($_POST['title']);
+  $title        = htmlspecialchars($_POST['title']);
   $summary      = Functions::cleanInput($_POST['summary']);
   $content      = trim($_POST['content']);
   $category_id  = (int) $_POST['category_id'];
@@ -61,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_article'])) {
   if (empty($title) || empty($summary) || empty($content) || empty($slug)) {
 
     Flash::set('error', 'يرجى ملئ الحقول المطلوبة');
-    header('Location: ../../View/pages/articles/create_view.php');
+    header('Location: ' . $_SERVER["HTTP_REFERER"]);
     exit;
   }
 
@@ -76,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_article'])) {
     }
   } catch (PDOException $e) {
     Flash::set('error', 'حدث خطأ أثناء الاتصال بقاعدة البيانات: ' . $e->getMessage());
-    header('Location: ../../View/pages/articles/create_view.php');
+    header('Location:/404');
     exit;
   }
 
@@ -85,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_article'])) {
 
   // $image_path = null;
 
-
+  // رفع الصورة
   if (isset($_FILES['photo']) && $_FILES['photo']['error'] === 0) {
 
     $file = $_FILES['photo']['name'];
@@ -99,15 +102,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_article'])) {
     if (in_array($fileActual, $allow)) {
       if ($error === 0) {
         if ($size < 10000000) {
-          $filenamenew = uniqid('', true) . "." . $fileActual;
+          $filenamenew = uniqid('', true) . "." . $fileActual; // إنشاء اسم فريد للملف
           $fileDestination = __DIR__ . '/../../views/media/images/' . $filenamenew;
-          // $fileDestination = __DIR__ . '/../../views/media/images/' . $filenamenew;
 
           echo $fileDestination;
           move_uploaded_file($tmp, $fileDestination);
           $image_path = $filenamenew;
         } else {
-          Flash::set('error', '  حجم الملف كبير جداُ الحد المسموح به هو 10 ميجا ');
+          Flash::set('error', '  حجم الملف كبير جداُ الحد المسموح به لا يجب أن يتجاوز 10 ميجا ');
           header("Location: " . $_SERVER["HTTP_REFERER"]);
           exit;
         }
@@ -119,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_article'])) {
     } else {
       // abort(400);
       Flash::set('error', '  نوع الملف غير مسموح ');
-      header('Location: ../../View/pages/articles/create_view.php');
+      header('Location: /article_create_view');
       exit;
     }
   } else {
@@ -128,70 +130,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_article'])) {
     exit;
   }
 
-
-
-
-
-
-  // if (isset($_FILES['photo']) && $_FILES['photo']['error'] === 0) {
-  //   $allowedExts = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-  //   $maxFileSize = 10 * 1024 * 1024; // 10MB
-
-  //   $fileName = $_FILES['photo']['name'];
-  //   $fileTmp   = $_FILES['photo']['tmp_name'];
-  //   $fileSize  = $_FILES['photo']['size'];
-  //   $fileType  = mime_content_type($fileTmp); // MIME فحص
-  //   $fileExt   = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-
-  //   // تحقق من الامتداد
-  //   if (!in_array($fileExt, $allowedExts)) {
-  //     Flash::set('error', '  نوع الملف غير مسموح ');
-  //       header('Location: ../../View/pages/articles/create_view.php');
-  //     exit;
-  //   }
-
-  //   // تحقق من نوع MIME الحقيقي
-  //   $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-  //   if (!in_array($fileType, $allowedMimeTypes)) {
-  //     Flash::set('error', '  نوع الملف غير أمن ');
-  //     header('Location: ../../View/pages/articles/create_view.php');
-  //     exit;
-  //   }
-
-  //   // تحقق من الحجم
-  //   if ($fileSize > $maxFileSize) {
-  //     Flash::set('error', '  حجم الملف كبير جداُ الحد المسموح به هو 10 ميجا ');
-  //     header("Location: " . $_SERVER["HTTP_REFERER"]);
-  //     exit;
-  //   }
-
-  //   // توليد اسم فريد
-  //   $newFileName = uniqid('img_', true) . '.' . $fileExt;
-
-  //   // مسار الحفظ
-  //   $uploadDir = dirname(__DIR__, 2) . '/views/media/images/';
-
-
-  //   if (!is_dir($uploadDir)) {
-  //     mkdir($uploadDir, 0755, true);
-  //   }
-
-  //   $destination = $uploadDir . $newFileName;
-
-  //   if (move_uploaded_file($fileTmp, $destination)) {
-  //     // حفظ المسار النسبي 
-  //     $image_path = 'views/media/images/' . $newFileName;
-
-  //   } else {
-  //     Flash::set('error', '  فشل أثناء رفع الملف');
-  //     header("Location: " . $_SERVER["HTTP_REFERER"]);
-  //     exit;
-  //   }
-  // } else {
-  //   Flash::set('error', '  لم يتم رفع أي صورة');
-  //   header("Location: " . $_SERVER["HTTP_REFERER"]);
-  //   exit;
-  // }
 
 
   // تحديد وقت النشر
@@ -224,29 +162,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_article'])) {
 
     if ($articles) {
       Flash::set('error', ' تم نشر المقال بنجاح');
-      header('Location: ../../View/pages/articles/create_view.php');
+      header('Location: /article_show?slug=' . $slug);
       exit;
       // header("Location: articles_list.php");
       // exit;
     } else {
       Flash::set('error', '  حدث خطأ أثناء نشر المقال');
-      header('Location: ../../View/pages/articles/create_view.php');
+      header('Location: /article_create_view');
       exit;
     }
   } catch (PDOException $e) {
     Flash::set('error', 'حدث خطأ أثناء الاتصال بقاعدة البيانات: ' . $e->getMessage());
-    header('Location: ../../View/pages/articles/create_view.php');
+    header('Location:/404');
     exit;
   }
 }
 
-// print_r($categories[0]);
 
 
-  // header('Location: ../../../View/pages/articles/create_view.php');
-    
-//     echo "<pre>";
-// var_dump($categories);
-// echo "</pre>";
-
-require_once __DIR__ . '/../../View/pages/articles/create_view.php';
+// require('View/pages/articles/create_view.php');

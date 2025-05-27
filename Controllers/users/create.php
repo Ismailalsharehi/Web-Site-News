@@ -1,7 +1,7 @@
-<?php 
-
+<?php
 
 namespace Controllers\users;
+
 use Core\Session;
 use Core\Flash;
 use Core\Database\Connection;
@@ -9,8 +9,6 @@ use Pdo;
 use PDOException;
 
 
-
-require_once __DIR__ . '/../../vendor/autoload.php';
 try {
   $db = Connection::connect();
   $stmt = $db->prepare("SELECT*  FROM users");
@@ -19,4 +17,9 @@ try {
 } catch (PDOException $e) {
   Flash::set('error', 'خطأ في الاتصال بقاعدة البيانات: ' . htmlspecialchars($e->getMessage()));
 }
-require_once __DIR__ . '/../../View/pages/users/create_view.php';
+
+// var_dump($users);
+// require_once __DIR__ . '/../../View/pages/users/create_view.php';
+
+
+require('View/pages/users/create_view.php');

@@ -1,25 +1,25 @@
 <?php
 
-require_once __DIR__ . '../../../../vendor/autoload.php';
+// require_once __DIR__ . '../../../../vendor/autoload.php';
 
-use Core\Flash;
-use Core\Database\Connection;
-use Controllers\users;
-use Core\Session;
+// use Core\Flash;
+// use Core\Database\Connection;
+// use Controllers\users;
+// use Core\Session;
 
-Session::start();
+// Session::start();
 
 
 
-$user = Session::get('user_data');
+// $user = Session::get('user_data');
 
-$error = Flash::get('error');
-$success = Flash::get('success');
-if ($error) {
-  echo '<div class="alert alert-danger">' . htmlspecialchars($error) . '</div>';
-} else {
-  echo '<div class="alert alert-danger">' . htmlspecialchars($success) . '</div>';
-}
+// $error = Flash::get('error');
+// $success = Flash::get('success');
+// if ($error) {
+//   echo '<div class="alert alert-danger">' . htmlspecialchars($error) . '</div>';
+// } else {
+//   echo '<div class="alert alert-danger">' . htmlspecialchars($success) . '</div>';
+// }
 // require('../../../Controllers/users/manage.php');
 ?>
 
@@ -37,7 +37,7 @@ if ($error) {
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h4>إدارة المستخدمين</h4>
 
-      <a href="create.php" class="btn btn-primary" data-bs-target="#addUserModal">+ <i class="bi bi-person-plus"></i> إضافة مستخدم</a>
+      <a href="/users_create" class="btn btn-primary" data-bs-target="#addUserModal">+ <i class="bi bi-person-plus"></i> إضافة مستخدم</a>
 
     </div>
 
@@ -102,7 +102,7 @@ if ($error) {
               <td><?= htmlspecialchars($user['email']) ?></td>
               <td><?= htmlspecialchars($user['role']) ?></td>
               <td><span class="badge bg-success">نشط</span></td>
-              <td>12</td>
+              <td><?= htmlspecialchars($user['article_count']) ?></td>
               <td><?= htmlspecialchars($user['created_at']) ?></td>
               <td><?= htmlspecialchars($user['updated_at']) ?></td>
               <td>
@@ -110,29 +110,30 @@ if ($error) {
 
                   <!-- فورم التعديل -->
                   <div>
-                    <form action="edit.php" method="GET">
+                    <form action="/users_edit" method="GET">
                       <input type="hidden" name="id" value="<?= htmlspecialchars($user['id']) ?>">
-                      <button type="submit" class="btn btn-sm btn-warning">
-                        <i class="bi bi-pencil-square"></i> تعديل
-                      </button>
+                      <button type="submit" class="btn btn-sm btn-outline-warning" title="تعديل">
+                        <i class="bi bi-pencil-square"></i> 
+                      </button> 
                     </form>
                   </div>
 
                   <!-- فورم الحذف -->
                   <div>
-                    <form action="delete.php" method="POST" onsubmit="return confirm('هل أنت متأكد من الحذف؟');">
+                    <form action="/users_destroy" method="POST" onsubmit="return confirm('هل أنت متأكد من الحذف؟');">
                       <input type="hidden" name="user_id" value="<?= htmlspecialchars($user['id']) ?>">
-                      <button type="submit" class="btn btn-sm btn-danger">
-                        <i class="bi bi-trash"></i> حذف
+                      <input type="hidden" name="_method" value="DELETE"> 
+                      <button type="submit" class="btn btn-sm btn-outline-danger" title="حذف">
+                        <i class="bi bi-trash"></i> 
                       </button>
                     </form>
                   </div>
                   <!-- فورم عرض التفاصيل -->
                   <div>
-                    <form action="show.php" method="GET">
+                    <form action="/users_show" method="GET">
                       <input type="hidden" name="id" value="<?= htmlspecialchars($user['id']) ?>">
-                      <button type="submit" class="btn btn-sm btn-info" name="show">
-                        <i class="bi bi-eye"></i> عرض
+                      <button type="submit" class="btn btn-sm btn-outline-primary" name="show" title="عرض">
+                        <i class="bi bi-eye"></i>
                       </button>
                     </form>
 

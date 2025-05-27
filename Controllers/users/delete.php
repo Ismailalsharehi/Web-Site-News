@@ -1,7 +1,7 @@
 <?php
 namespace Controllers\users;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
+
 
 use Core\Session;
 Session::start();

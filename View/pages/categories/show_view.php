@@ -1,25 +1,10 @@
 
 <?php 
 
- use Core\Flash;
-use Core\Session;
-// use Controllers\categories;
-
-$error = Flash::get('error');
-$success = Flash::get('success'); 
-
-if ($error) {
-    echo '<div class="alert alert-danger">' . htmlspecialchars($error) . '</div>';
-}
-
-if ($success) {
-    echo '<div class="alert alert-success">' . htmlspecialchars($success) . '</div>';
-}
-
 
 
   
-  // var_dump($categories['name']);
+  var_dump($categories);
 ?>
 
 <?php require_once __DIR__ . '../../../parts/header.php'; ?>
@@ -40,7 +25,7 @@ if ($success) {
       <p><strong>رقم القسم:</strong><?= htmlspecialchars($categories['id']) ?></p>
       <p><strong>الاسم:</strong> <?= htmlspecialchars($categories['name']) ?>  </p>
       <p><strong>الـSlug:</strong>  <?= htmlspecialchars($categories['slug']) ?></p>
-      <p><strong>الوصف:</strong>  <?= htmlspecialchars($categories['description']) ?></p>
+      <p><strong>الوصف:</strong>  <?= htmlspecialchars($categories['description']?? 'no description yet') ?></p>
       <p><strong>تاريخ الإنشاء:</strong> <?= htmlspecialchars($categories['created_at']) ?></p>
       <p><strong>آخر تعديل:</strong> <?= htmlspecialchars($categories['updated_at']) ?></p>
       <p><strong>عدد المقالات بهذا القسم: </strong>  <?= htmlspecialchars($article_count)?></p>
@@ -50,7 +35,7 @@ if ($success) {
         
     </div>
     <div class="card-footer text-end">
-      <a href="../../View/pages/categories/manage_view.php" class="btn btn-secondary">الرجوع</a>
+      <a href="/categories_manage" class="btn btn-secondary">الرجوع</a>
       
     </div>
   </div>

@@ -1,20 +1,28 @@
 <?php
 
 namespace Controllers\articles;
+
 use Core\Session;
+
+
 use Core\Flash;
 use Core\Database\Connection;
 use Pdo;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
-// if (headers_sent($file, $line)) {
-//     die("Headers already sent in $file on line $line");
-// }
-// require_once __DIR__ . '/../../vendor/autoload.php';
 
-  $db = Connection::connect();
-  $stmt = $db->prepare("SELECT id, name FROM categories");
-  $stmt->execute();
-  $categories = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+$user_id = Session::get('user')['id'] ?? null;
 
-require_once __DIR__ . '/../../View/pages/articles/create_view.php';
+
+$db = Connection::connect();
+$stmt = $db->prepare("SELECT id, name FROM categories");
+$stmt->execute();
+$categories = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+if (Session::isAdmin()) {
+  // Flash::set('success', 'مرحباً ' . htmlspecialchars(Session::get('user')['name']));
+  require('View/pages/articles/create_view.php');
+} else {
+  Flash::set('error', 'ليس لديك صلاحيات للوصول إلى هذه الصفحة.');
+  header('Location: /');
+  exit;
+}

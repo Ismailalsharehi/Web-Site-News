@@ -1,28 +1,10 @@
 <?php
-require_once __DIR__ . '../../../vendor/autoload.php';
 
-use Core\Session;
-use Core\Flash;
-
-if (headers_sent($file, $line)) {
-  // die("Headers already sent in $file on line $line");
-}
-var_dump(Session::get('user_data'));
-// check if the user is logged in
-if (!Session::has('user')) {
-  Flash::set('error', 'يجب تسجيل الدخول للوصول إلى هذه الصفحة.');
-  header('Location: ../index.php');
-  exit;
-}
-// check if the user is admin
-if (Session::get('user')['role'] !== 'admin') {
-  Flash::set('error', 'ليس لديك إذن للوصول إلى هذه الصفحة.');
-  header('Location:index.php');
-  exit;
-}
 ?>
 
 
+<?php if(Core\Session::has('user')?? false):?>
+  <?php if (Core\Session::get('user')['role']=== 'admin' ):?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">لوحة التحكم</a>
@@ -34,28 +16,30 @@ if (Session::get('user')['role'] !== 'admin') {
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <!-- رابط الرئيسية يظهر للجميع -->
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/admin">الرئيسية</a>
-        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">الرئيسية</a>
+        </li> -->
 
         <!-- للمشرفين فقط -->
 
-        <li class="nav-item"><a class="nav-link" href="../../../View/pages/users/manage_view.php">المستخدمين</a></li>
-        <li class="nav-item"><a class="nav-link" href="/admin/categories">التصنيفات</a></li>
-        <li class="nav-item"><a class="nav-link" href="/admin/tags">الوسوم</a></li>
+        <li class="nav-item"><a class="nav-link" href="/users_manage">المستخدمين</a></li>
+        <li class="nav-item"><a class="nav-link" href="/categories_manage">التصنيفات</a></li>
+        <!-- <li class="nav-item"><a class="nav-link" href="/admin/tags">الوسوم</a></li> -->
 
 
         <!-- للمشرفين والمحررين -->
 
-        <li class="nav-item"><a class="nav-link" href="/admin/articles">المقالات</a></li>
-        <li class="nav-item"><a class="nav-link" href="/admin/comments">التعليقات</a></li>
+        <li class="nav-item"><a class="nav-link" href="/article_manage">المقالات</a></li>
+        <!-- <li class="nav-item"><a class="nav-link" href="/admin/comments">التعليقات</a></li> -->
 
 
         <!-- للكتاب (authors) -->
 
-        <li class="nav-item"><a class="nav-link" href="/admin/my-articles">مقالاتي</a></li>
+        <!-- <li class="nav-item"><a class="nav-link" href="/admin/my-articles">مقالاتي</a></li> -->
 
       </ul>
     </div>
   </div>
 </nav>
+  <?php endif; ?>
+<?php endif; ?>

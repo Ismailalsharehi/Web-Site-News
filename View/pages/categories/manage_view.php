@@ -1,13 +1,7 @@
 <?php 
-require_once __DIR__ . '../../../../vendor/autoload.php';
-
-use Core\Flash;
-
-$error = Flash::get('error');
-$success = Flash::get('success');
-
-// جلب الأقسام من قاعدة البيانات
-// require('../../../Controllers/categories/manage.php');
+// echo '<pre>';
+// var_dump($categories);
+// echo '</pre>';
 
 ?>
 
@@ -19,16 +13,11 @@ $success = Flash::get('success');
   <div class="container">
 
     <!-- عرض رسائل التنبيه -->
-    <?php if ($error): ?>
-      <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
-    <?php elseif ($success): ?>
-      <div class="alert alert-success"><?= htmlspecialchars($success) ?></div>
-    <?php endif; ?>
-
+    
     <!-- العنوان وزر الإضافة -->
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h4>إدارة الأقسام</h4>
-      <a href="create.php" class="btn btn-success">
+      <a href="/categories_create" class="btn btn-success">
         <i class="bi bi-plus-circle"></i> إضافة قسم جديد
       </a>
     </div>
@@ -71,14 +60,15 @@ $success = Flash::get('success');
                 <td><?= htmlspecialchars($cat['created_at']) ?></td>
                 <td>
                   <div class="d-flex justify-content-center gap-1">
-                    <a href="show.php?id=<?= $cat['id'] ?>" class="btn btn-sm btn-info text-white">
+                    <a href="/categories_show?id=<?= $cat['id'] ?>" class="btn btn-sm btn-info text-white">
                       <i class="bi bi-eye"></i> عرض
                     </a>
-                    <a href="edit.php?id=<?= $cat['id'] ?>" class="btn btn-sm btn-warning" name="edit">
+                    <a href="/categories_edit?id=<?= $cat['id'] ?>" class="btn btn-sm btn-warning" name="edit">
                       <i class="bi bi-pencil-square"></i> تعديل
                     </a>
-                    <form action="delete.php" method="POST" onsubmit="return confirm('هل أنت متأكد من حذف هذا القسم؟');">
+                    <form action="/categories_destroy" method="POST" onsubmit="return confirm('هل أنت متأكد من حذف هذا القسم؟');">
                       <input type="hidden" name="id" value="<?= $cat['id'] ?>">
+                      <input type="hidden" name="_method" value="DELETE">
                       <button type="submit" class="btn btn-sm btn-danger" name="delete">
                         <i class="bi bi-trash"></i> حذف
                       </button>

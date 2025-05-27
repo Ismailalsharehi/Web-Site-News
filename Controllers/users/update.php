@@ -1,7 +1,4 @@
 <?php
-namespace Controllers\users;
-
-require_once __DIR__ . '/../../vendor/autoload.php';
 
 use Core\Session;
 
@@ -12,11 +9,14 @@ use PDOException;
 use Core\Flash;
 use PDO;
 
+
+var_dump($_POST);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
   // استقبال البيانات
-  $id = intval($_POST['id'] ?? 0); // تأكد أن لديك الـ ID
+  $id = intval($_POST['id'] ?? 0);
   $full_name = htmlspecialchars(trim($_POST['full_name'] ?? ''));
   $username = preg_replace('/[^a-zA-Z0-9_]/', '', trim($_POST['username'] ?? ''));
   $email = htmlspecialchars(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
@@ -29,17 +29,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // تحقق من الحقول الأساسية
   if (empty($id) || empty($full_name) || empty($username) || empty($email)) {
     Flash::set('error', 'يرجى ملء جميع الحقول المطلوبة.');
-    header('Location: edit.php?id='.$id);
+    header('Location: /users_edit?id=' . $id);
     exit;
   }
 
   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     Flash::set('error', 'يرجى إدخال بريد إلكتروني صالح.');
-    header('Location: edit.php?id='.$id);
+    header('Location: /users_edit?id=' . $id);
     exit;
   }
 
-  // إعداد قاعدة البيانات
   try {
     $db = Connection::connect();
 
@@ -50,13 +49,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($password) || !empty($confirm_password)) {
       if (strlen($password) < 6 || strlen($confirm_password) < 6) {
         Flash::set('error', 'كلمة المرور يجب أن تكون 6 أحرف على الأقل.');
-        header('Location: edit.php?id='.$id);
+        header('Location: /users_edit?id=' . $id);
         exit;
       }
 
       if ($password !== $confirm_password) {
         Flash::set('error', 'كلمات المرور غير متطابقة.');
-        header('Location: edit.php?id='.$id);
+        header('Location: /users_edit?id=' . $id);
         exit;
       }
 
@@ -106,16 +105,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($result) {
       Flash::set('success', 'تم تحديث بيانات المستخدم بنجاح.');
-      header('Location: manage.php');
+      header("Location:" . $_SERVER["HTTP_REFERER"]);
       exit;
     } else {
       Flash::set('error', 'حدث خطأ أثناء التحديث.');
-      header('Location: manage.php?id='.$id);;
+      header('Location: /users_manage?id=' . $id);;
       exit;
     }
   } catch (PDOException $e) {
     Flash::set('error', 'خطأ في الاتصال بقاعدة البيانات: ' . $e->getMessage());
-    header('Location: ../../View/pages/users/edit_view.php?id=' . $id);
+    header('Location: /users_edit?id=' . $id);
     exit;
   }
 }

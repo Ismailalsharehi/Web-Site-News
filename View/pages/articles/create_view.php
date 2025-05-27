@@ -1,25 +1,5 @@
-<?php
 
- require_once __DIR__ . '../../../../vendor/autoload.php';
 
-  use Core\Session;
-use Core\Flash;
-//  use Controllers\articles;
-
-$error = Flash::get('error');
-$success = Flash::get('success');
-
- if ($error) {
-     echo '<div class="alert alert-danger">' . htmlspecialchars($error) . '</div>';
-}
- else{
-    echo '<div class="alert alert-danger">' . htmlspecialchars($success) . '</div>';
- } 
-
-// require('../../../Controllers/articles/store.php');  
-
-  // var_dump($categories);
-?>
 
 <?php require_once __DIR__ . '../../../parts/header.php'; ?>
 
@@ -27,10 +7,11 @@ $success = Flash::get('success');
 <?php require_once __DIR__ . '../../../parts/adminBar.php'; ?>
 
 
+
 <div class="container mt-5">
   <h2>إضافة مقال جديد</h2>
 
-  <form action="store.php" method="POST" enctype="multipart/form-data">
+  <form action="/article_store" method="POST" enctype="multipart/form-data">
     <div class="row">
       <div class="col-md-8">
         <div class="mb-3">
@@ -58,7 +39,7 @@ $success = Flash::get('success');
               <label for="category_id" class="form-label">التصنيف</label>
               <select class="form-select" id="category_id" name="category_id" required>
                 <option value="">اختر تصنيفاً</option>
-                <?php foreach ($categories as $cat): ?>
+                <?php foreach ($categories as $cat): ?> 
                 
                   <option value="<?= $cat['id'] ?>"><?= htmlspecialchars($cat['name']) ?></option>
                   <?php endforeach; ?>
@@ -96,7 +77,7 @@ $success = Flash::get('success');
             </div>
 
             <!--  معرف المستخدم الحالي -->
-            <input type="hidden" name="user_id" value="<?=Session::get('user_id', 1) ?>">
+            <input type="hidden" name="user_id" value="<?= htmlspecialchars($user_id) ?>">
 
             <div class="d-grid gap-2">
               <button type="submit" name="add_article" class="btn btn-primary">نشر المقال</button>
@@ -109,4 +90,4 @@ $success = Flash::get('success');
   </form>
 </div>
 
-<?php require('../../parts/footer.php') ?>
+<?php require_once __DIR__ . '../../../parts/footer.php'; ?>

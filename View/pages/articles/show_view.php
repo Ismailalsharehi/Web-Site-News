@@ -1,30 +1,18 @@
 <?php
 
 // require_once __DIR__ . '/../../vendor/autoload.php';
-use Core\Session;
-use Core\Flash;
+// use Core\Session;
+// use Core\Flash;
 
-$error = Flash::get('error');
-$success = Flash::get('success');
+// $error = Flash::get('error');
+// $success = Flash::get('success');
 ?>
 
 <?php require_once __DIR__ . '../../../parts/header.php'; ?>
 <?php require_once __DIR__ . '../../../parts/navegation.php'; ?>
 <?php require_once __DIR__ . '../../../parts/adminBar.php'; ?>
 
-<div class="container my-4">
-  <?php if ($error): ?>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-      <?= htmlspecialchars($error) ?>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  <?php elseif ($success): ?>
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-      <?= htmlspecialchars($success) ?>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  <?php endif; ?>
-</div>
+
 
 <div class="container my-5">
   <div class="row">

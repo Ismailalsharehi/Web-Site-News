@@ -1,18 +1,18 @@
 <?php
-use Core\Session;
-use Core\Flash;
-use Controller\users;
+// use Core\Session;
+// use Core\Flash;
+// use Controller\users;
 
-$error = Flash::get('error');
-// $success = new Flash();
-$success = Flash::get('success');
+// $error = Flash::get('error');
+// // $success = new Flash();
+// $success = Flash::get('success');
 
-if ($error) {
-  echo '<div class="alert alert-danger">' . htmlspecialchars($error) . '</div>';
-}
-elseif ($success) {
-    echo '<div class="alert alert-success">' . htmlspecialchars($error) . '</div>';
-  }
+// if ($error) {
+//   echo '<div class="alert alert-danger">' . htmlspecialchars($error) . '</div>';
+// }
+// elseif ($success) {
+//     echo '<div class="alert alert-success">' . htmlspecialchars($error) . '</div>';
+//   }
 
 
 ?>
@@ -26,20 +26,17 @@ elseif ($success) {
 
 
 
+ 
 
-<!-- // require_once __DIR__ . '../../../../Model/users.php';
-
-// use Model\Users;
-// use Core\Database;
-// use PDO ; -->
-
-  <div class="card shadow">
+  <div class="card shadow"> 
     <div class="card-header">
       تعديل بيانات المستخدم
     </div>
     <div class="card-body p-4">
-      <form action="update.php" method="POST" novalidate>
+      <form action="/users_update" method="POST" novalidate>
         <input type="hidden" name="id" value="<?= htmlspecialchars($user['id']) ?>">
+         <input type="hidden" name="_method" value="PUT"> 
+         
         <div class="mb-3">
           <label for="full_name" class="form-label">الاسم الكامل</label>
           <input type="text" class="form-control" id="full_name" name="full_name" placeholder="أدخل اسمك الكامل" value="<?= htmlspecialchars($user['full_name']) ?>" required>

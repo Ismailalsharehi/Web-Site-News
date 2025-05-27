@@ -4,7 +4,7 @@
 
 // use Core\Flash;  
 // use Core\Session;
-use Controllers\categories;
+// use Controllers\categories;
 
 // $error = Flash::get('error');
 // $success = Flash::get('success'); 
@@ -35,7 +35,7 @@ use Controllers\categories;
         <?php foreach ($categories as $category): ?>
           <h5> <?= htmlspecialchars($category['name']) ?></h5>
           <p><strong>تاريخ الإنشاء:</strong> <?= htmlspecialchars($category['created_at']) ?></p>
-          <a href="show.html?id=1" class="btn btn-primary">عرض التفاصيل</a>
+          <a href="/categories_show?id=1" class="btn btn-primary">عرض التفاصيل</a>
           <?php endforeach; ?>
       </div>
     

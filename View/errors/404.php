@@ -1,17 +1,15 @@
- <?php
+
+<?php require_once __DIR__ . '../../parts/header.php'; ?>
+<?php require_once __DIR__ . '../../parts/navegation.php'; ?>
+x
+
+ <div class="bg-light">
+<div class="container mt-5"> 
+<div class="alert alert-danger text-center" role="alert">
+ <h4 class="alert-heading">404 - الصفحة غير موجودة</h4>
+ <p>عذرًا، الصفحة التي تبحث عنها غير موجودة. قد تكون قد تمت إزالتها أو تغيير عنوانها.</p>
 
 
-use Core\Middleware;  
-use Core\Routers;
 
-require_once '../parts/header.php';
-require_once '../parts/navegation.php';
-
-echo '<div class="bg-light">';
-echo '<div class="container mt-5">';  
-echo '<div class="alert alert-danger text-center" role="alert">';
-echo '<h4 class="alert-heading">404 - الصفحة غير موجودة</h4>';
-echo '<p>عذرًا، الصفحة التي تبحث عنها غير موجودة. قد تكون قد تمت إزالتها أو تغيير عنوانها.</p>';
-
-require_once '../parts/footer.php';
-?>
+ <?php require_once __DIR__ . '../../parts/footer.php'; ?>
+<!-- require_once '../parts/footer.php'; -->

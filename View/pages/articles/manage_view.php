@@ -1,13 +1,5 @@
 <?php
 
-require_once __DIR__ . '../../../../vendor/autoload.php';
-
-use Core\Flash;
-use Core\Database\Connection;
-use Controllers\articles;
-
-$error = Flash::get('error');
-$success = Flash::get('success');
 
 // require('../../../Controllers/articles/manage.php');
 
@@ -20,30 +12,20 @@ $success = Flash::get('success');
 
 <div class="bg-light py-5">
   <div class="container">
-    <!-- التنبيهات -->
-    <?php if ($error): ?>
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <?= htmlspecialchars($error) ?>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    <?php elseif ($success): ?>
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <?= htmlspecialchars($success) ?>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    <?php endif; ?>
+  
+    
 
     <!-- عنوان الصفحة وزر الإضافة -->
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h2 class="fw-bold"> إدارة المقالات</h2>
-      <a href="create.php" class="btn btn-success btn-lg shadow">
+      <a href="/article_create" class="btn btn-success btn-lg shadow">
          <i class="bi bi-file-earmark-plus"></i> إضافة مقال
       </a>
     </div>
 
     <!-- ملخص -->
     <div class="alert alert-info">
-      <strong>📄 إجمالي المقالات:</strong> <?= htmlspecialchars($articles_count) ?>
+      <strong> إجمالي المقالات:</strong> <?= htmlspecialchars($articles_count) ?>
     </div>
 
     <!-- نموذج البحث والفلترة -->
@@ -122,16 +104,23 @@ $success = Flash::get('success');
               <td><?= $article['published_at'] ? date('Y-m-d', strtotime($article['published_at'])) : '—' ?></td>
               <td>
                 <div class="btn-group" role="group">
-                  <form action="show.php" method="GET">
+
+                  <form action="/article_show" method="GET">
                     <input type="hidden" name="slug" value="<?= htmlspecialchars($article['slug']) ?>">
+                    <!-- <input type="hidden" name="_method" value="DELETE"> -->
                     <button type="submit" class="btn btn-sm btn-outline-primary" title="عرض"><i class="bi bi-eye"></i></button>
                   </form>
-                  <form action="edit.php" method="GET">
+
+                  <form action="/article_edit" method="GET">
                     <input type="hidden" name="id" value="<?= htmlspecialchars($article['id']) ?>">
+                
                     <button type="submit" class="btn btn-sm btn-outline-warning" title="تعديل"><i class="bi bi-pencil-square"></i></button>
                   </form>
-                  <form action="delete.php" method="POST" onsubmit="return confirm('هل أنت متأكد من الحذف؟');">
+
+                  <form action="/article_destroy" method="POST" onsubmit="return confirm('هل أنت متأكد من الحذف؟');">
                     <input type="hidden" name="article_id" value="<?= $article['id'] ?>">
+                    <input type="hidden" name="_method" value="DELETE">
+
                     <button type="submit" class="btn btn-sm btn-outline-danger" title="حذف"><i class="bi bi-trash"></i></button>
                   </form>
                 </div>
@@ -158,4 +147,4 @@ $success = Flash::get('success');
   </div>
 </div>
 
-<?php require('../../parts/footer.php') ?>
+<?php require_once __DIR__ . '../../../parts/footer.php'; ?>

@@ -1,14 +1,4 @@
-<?php
 
-
-// require_once __DIR__ . '../../../../vendor/autoload.php';
-use Core\Flash;
-
-$error = Flash::get('error');
-if ($error) {
-    echo '<div class="alert alert-danger">' . htmlspecialchars($error) . '</div>';
-}
-?>
 
 <?php require_once __DIR__ . '../../../parts/header.php'; ?>
 
@@ -16,18 +6,13 @@ if ($error) {
 <?php require_once __DIR__ . '../../../parts/adminBar.php'; ?>
 
 
-<!-- // require_once __DIR__ . '../../../../Model/users.php';
-
-// use Model\Users;
-// use Core\Database;
-// use PDO ; -->
 
   <div class="card shadow">
     <div class="card-header">
       إنشاء حساب جديد
     </div>
     <div class="card-body p-4">
-      <form action="store.php" method="POST" novalidate>
+      <form action="/users_store" method="POST" novalidate>
         
         <div class="mb-3">
           <label for="full_name" class="form-label">الاسم الكامل</label>
@@ -74,7 +59,7 @@ if ($error) {
 
 
 
-<?php require('../../parts/footer.php')?>
+<?php require_once __DIR__ . '../../../parts/adminBar.php'; ?>
 
 
 

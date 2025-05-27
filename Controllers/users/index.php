@@ -2,13 +2,18 @@
 
 namespace Controllers\users;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
 
 use Core\Session;
+
+Session::start();
+
 use Core\Database\Connection;
 use Core\Flash;
 use PDO;
 use PDOException;
+
+
+// var_dump($_POST);
 
 // بدء الجلسة الآمنة
 ini_set('session.cookie_secure', '1');      // فقط مع HTTPS
@@ -21,25 +26,25 @@ ini_set('session .cookie_lifetime', 0); // انتهاء الجلسة عند إغ
 ini_set('session.gc_maxlifetime', 1440); // مدة الجلسة 24 دقيق\
 
 // var_dump($_POST);
-Session::start();
+// Session::start();
 
 // تحقق من أن الطلب من نوع POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
   Flash::set('error', 'طلب غير صالح.');
   // revresh the page 
 
-  header('Location: ../../View/errors/404.php');
+  header('Location: /404');
   exit;
 }
 
 
 // تحقق من CSRF
-$csrf_token = $_POST['csrf_token'] ?? '';
-if (!Session::has('csrf_token') || $csrf_token !== Session::get('csrf_token')) {
-  Flash::set('error', 'رمز CSRF غير صالح.');
-  header('Location: ../../View/pages/users/show_view.php');
-  exit;
-}
+// $csrf_token = $_POST['csrf_token'] ?? '';
+// if (!Session::has('csrf_token') || $csrf_token !== Session::get('csrf_token')) {
+//   Flash::set('error', 'رمز CSRF غير صالح.');
+//   header('Location: /users_index_view');
+//   exit;
+// }
 
 // استلام البيانات
 $email = trim($_POST['email'] ?? '');
@@ -55,17 +60,17 @@ $password = trim($_POST['password'] ?? '');
 // التحقق من البيانات
 if (empty($email) || empty($password)) {
   Flash::set('error', 'يرجى ملء جميع الحقول.');
-  header('Location: ../../View/pages/users/show_view.php');
+  header('Location: /login');
   exit;
 }
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
   Flash::set('error', 'يرجى إدخال بريد إلكتروني صالح.');
-  header('Location: ../../View/pages/users/show_view.php');
+  header('Location: /login');
   exit;
 }
 if (strlen($password) < 6) {
   Flash::set('error', 'كلمة المرور يجب أن تكون 6 أحرف على الأقل.');
-  header('Location: ../../View/pages/users/show_view.php');
+  header('Location: /login');
   exit;
 }
 
@@ -75,13 +80,13 @@ $last_attempt_time = Session::get('last_attempt_time') ?? 0;
 
 if ($login_attempts >= 5 && time() - $last_attempt_time < 300) {
   Flash::set('error', 'لقد تجاوزت الحد الأقصى للمحاولات. حاول لاحقًا.');
-die(Flash::get('error'). time() - $last_attempt_time);
+  die(Flash::get('error') . time() - $last_attempt_time);
   exit;
 }
 
 
-Session::set('last_attempt_time', time());
-Session::set('login_attempts', $login_attempts + 1); 
+Session::set('last_attempt_time', time()); // 
+Session::set('login_attempts', $login_attempts + 1);
 
 // الاتصال بقاعدة البيانات
 try {
@@ -95,17 +100,31 @@ try {
   if ($user && password_verify($password, $user['password'])) {
     session_regenerate_id(true);
     Session::set('user_id', $user['id']);
+    Session::set('user', [
+      'id' => $user['id'],
+      'name' => $user['full_name'],
+      'username' => $user['username'],
+      'email' => $user['email'],
+      'role' => $user['role'],
+      'created_at' => $user['created_at'] ?? null,
+      'last_login' => date('Y-m-d H:i:s'),
+    ]);
+    Session::set('last_login_time', time());
+
+
+
+
+
 
     // إعادة ضبط محاولات الدخول
     Session::set('login_attempts', 0);
 
-    // تحديث آخر دخول ناجح
-    // $update = $db->prepare("UPDATE users SET last_login_success = NOW() WHERE id = :id");
-    // $update->bindParam(':id', $user['id']);
-    // $update->execute();
+
 
     Flash::set('success', 'تم تسجيل الدخول بنجاح.');
-    header('Location: ../articles/index.php');
+    header('Location: /');
+
+
     exit;
   } else {
     // تحديث فشل الدخول
@@ -114,13 +133,13 @@ try {
     // $fail->execute();
 
     Flash::set('error', 'فشل تسجيل الدخول. تحقق من البريد وكلمة المرور.');
-      header("Location: " . $_SERVER["HTTP_REFERER"]);
+    header("Location: " . $_SERVER["HTTP_REFERER"]);
     exit;
   }
 } catch (PDOException $e) {
   Flash::set('error', 'خطأ في الاتصال بقاعدة البيانات.');
-  header('Location: ../../View/pages/users/show_view.php');
+  header('Location: /404');
   exit;
 }
 
-require_once __DIR__ . '/../../View/pages/users/index_view.php';
+require('View/pages/users/index_view.php');

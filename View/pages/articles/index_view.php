@@ -83,7 +83,7 @@
 <div class="breaking-news-container py-2 px-3 mb-4">
   <div class="breaking-news-content">
     <?php foreach ($newsNow as $news): ?>
-      🔴 <a href="news/single.php?slug=news-<?= htmlspecialchars($news['slug']) ?>" class="text-white fw-bold text-decoration-none me-4">
+      🔴 <a href="/article_show_view?slug=<?= htmlspecialchars($news['slug']) ?>" class="text-white fw-bold text-decoration-none me-4">
         <?= htmlspecialchars($news['title']) ?>
       </a>
     <?php endforeach; ?>
@@ -132,12 +132,12 @@
       <?php foreach ($articles as $article): ?>
         <div class="col-md-6">
           <div class="card shadow-sm border-0 h-100">
-            <a href="show.php?slug=<?= urlencode($article['slug']) ?>"><img src="../../views/media/images/<?= htmlspecialchars($article['image_path']) ?>" alt="<?= htmlspecialchars($article['title']) ?>" class="card-img-top" loading="lazy"></a>
+            <a href="/article_show?slug=<?= urlencode($article['slug']) ?>"><img src="../../views/media/images/<?= htmlspecialchars($article['image_path']) ?>" alt="<?= htmlspecialchars($article['title']) ?>" class="card-img-top" loading="lazy"></a>
             <div class="card-body d-flex flex-column">
               <h6 class="news-title"><?= htmlspecialchars($article['title']) ?></h6>
               <p class="card-text text-muted flex-grow-1"><?= htmlspecialchars($article['summary']) ?></p>
               <div class="d-flex justify-content-between align-items-center mt-3">
-                <a href="show.php?slug=<?= urlencode($article['slug']) ?>" class="btn btn-sm btn-primary fw-bold">اقرأ المزيد</a>
+                <a href="/article_show?slug=<?= urlencode($article['slug']) ?>" class="btn btn-sm btn-primary fw-bold">اقرأ المزيد</a>
                 <div class="share-btns">
                   <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode('http://localhost/Ismail/website-news/articles/' . $article['slug']); ?>"
                     target="_blank"
@@ -180,7 +180,7 @@
       <ul class="list-group list-group-flush">
         <?php foreach ($Viewed as $views): ?>
           <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2 border-0">
-            <a href="show.php?slug=<?= htmlspecialchars($views['slug']) ?>" class="text-decoration-none">
+            <a href="/article_show?slug=<?= htmlspecialchars($views['slug']) ?>" class="text-decoration-none">
               <?= htmlspecialchars($views['title']) ?>
             </a>
             <span class="badge bg-primary rounded-pill"><?= $views['views_count'] ?></span>

@@ -2,7 +2,7 @@
 
 namespace Controllers\articles;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
+// require_once __DIR__ . '/../../vendor/autoload.php';
 
 use Core\Database\Connection;
 use Core\Session;
@@ -26,9 +26,9 @@ $slug = $_GET['slug'] ?? null;
 // var_dump($slug);
 // $id = $_GET['id'] ?? null;
 
-if (!$slug ) {
+if (!$slug) {
   Flash::set('error', 'رابط المقال غير صالح.');
-  header('Location: ../../View/pages/articles/index_view.php');
+  header('Location: /');
   exit;
 }
 
@@ -54,7 +54,7 @@ $article = $stmt->fetch(PDO::FETCH_ASSOC);
 if (!$article) {
   Flash::set('error', 'المقال غير موجود.');
   // var_dump($article);
-  header('Location: ../../View/pages/articles/show_view.php');
+  header('Location: /404');
   exit;
 }
 
@@ -72,7 +72,7 @@ if (!is_array($viewed)) {
 }
 
 if (!in_array($article['id'], $viewed)) { // إذا لم يكن المقال في قائمة المشاهدة
-  // زيادة عدد المشاهدات في قاعدة البيانات
+  // زيادة عدد المشاهدات في قاعددة البيانات
   $updateQuery = "UPDATE articles SET views_count = views_count + 1 WHERE id = :id";
   $updateStmt = $db->prepare($updateQuery);
   $updateStmt->bindParam(':id', $article['id'], PDO::PARAM_INT);
@@ -87,5 +87,4 @@ if (!in_array($article['id'], $viewed)) { // إذا لم يكن المقال ف�
   // عرض المقال
 }
 Flash::set('success', 'تم جلب المقال بنجاح.');
-require_once __DIR__ . '/../../View/pages/articles/show_view.php';
-exit;
+require('View/pages/articles/show_view.php');

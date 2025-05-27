@@ -1,9 +1,8 @@
 <?php
 namespace Controllers\articles;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
-
 use Core\Session;
+Session::start();
 use Core\Flash;
 use Core\Database\Connection;
 use PDOException;
@@ -76,13 +75,6 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 
-
-
-
-
-
-
-
     
 
 // featch the Authors 
@@ -126,10 +118,10 @@ $Viewed = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 }catch(PDOexception $e){
   Flash::set('error', "حصل خطأ أثناء الاتصال بقاعدة البيانات: " . $e->getMessage());
-  $newsNow = []; // لتفادي أي أخطاء لاحقة
+  $newsNow = []; // لتفادي أي أخطاء بعدييين
 }
 
 
 
 // عرض صفحة العرض
-require_once __DIR__ . '/../../View/pages/articles/index_view.php';
+require ('View/pages/articles/index_view.php');

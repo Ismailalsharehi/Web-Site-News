@@ -1,21 +1,6 @@
 <?php
 // require_once __DIR__ . '../../../../vendor/autoload.php';
 
-use Core\Session;
-  use Core\Flash;
-use Controllers\categories;
-
-// $success = new Flash();
-$error = Flash::get('error');
-$success = Flash::get('success');
-// var_dump($category);
-
-if ($error) {
-  echo '<div class="alert alert-danger">' . htmlspecialchars($error) . '</div>';
-}
-elseif ($success) {
-    echo '<div class="alert alert-success">' . htmlspecialchars($error) . '</div>';
-  }
 
 
   
@@ -35,10 +20,11 @@ elseif ($success) {
       <h5 class="mb-0">تعديل القسم</h5>
     </div>
     <div class="card-body">
-      <form action="update.php" method="POST">
+      <form action="/categories_update" method="POST">
         <!-- حقل مخفي لرقم القسم (id) -->
          
         <input type="hidden" name="id" value=" <?= htmlspecialchars($category['id']) ?>">
+        <input type="hidden" name="_method" value="PUT">
 
         <!-- اسم القسم -->
         <div class="mb-3">
@@ -55,12 +41,12 @@ elseif ($success) {
         <!-- الوصف -->
         <div class="mb-3">
           <label for="description" class="form-label">الوصف</label>
-          <textarea class="form-control" id="description" name="description" rows="4"> <?= htmlspecialchars($category['description'])?></textarea>
+          <textarea class="form-control" id="description" name="description" rows="4"> <?= htmlspecialchars($category['description']?? ' no discription yet')?></textarea>
         </div>
 
         <!-- أزرار -->
         <button type="submit" class="btn btn-primary" name="update_categories">تحديث</button>
-        <a href="#" class="btn btn-secondary">إلغاء</a>
+        <a href="/categories_manage_view" class="btn btn-secondary">إلغاء</a>
       </form>
     </div>
   </div>

@@ -1,21 +1,23 @@
 <?php
 
 namespace Core;
-require_once __DIR__ . '/../vendor/autoload.php';
 
 
 class Session
 {
 
+
   public static function start(): void
   {
-    if (session_status() === PHP_SESSION_NONE) {
+    if (session_status() === PHP_SESSION_NONE) { // تحقق إذا كانت الجلسة لم تبدأ بعد
       session_start();
     }
   }
 
+
   public static function set(string $key, mixed $value): void
   {
+
 
     self::start();
     $_SESSION[$key] = $value;
@@ -30,7 +32,7 @@ class Session
   public static function has(string $key): bool
   {
     self::start();
-    return isset($_SESSION[$key]);
+    return isset($_SESSION[$key]); // رجعه اذا موجود
   }
 
 
@@ -69,12 +71,14 @@ class Session
     return self::userRole() === 'admin';
   }
 
-  public static function hasRole(string $role): bool
-  {
-    return self::userRole() === $role;
-  }
+  // public static function hasRole(string $role): bool
+  // {
+  //   return self::userRole() === $role;
+  // }
+
   public static function isLoggedIn(): bool
   {
     return self::has('user');
   }
+
 }

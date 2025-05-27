@@ -1,10 +1,10 @@
 <?php
 namespace Controllers\articles;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
 
 use Core\Session;
 Session::start();
+
 use Core\Database\Connection;
 use Core\Flash;
 use PDOException;
@@ -20,13 +20,15 @@ try {
 
   if ($stmt->rowCount() > 0) {
     Flash::set('success', "تم حذف المقال بنجاح");
+    header("Location: " . $_SERVER["HTTP_REFERER"]);
+    exit;
     
   } else {
     Flash::set('error', "لم يتم حذف المقال");
+    header("Location: " . $_SERVER["HTTP_REFERER"]);
+    exit;
   }
 
-  header("Location: " . $_SERVER["HTTP_REFERER"]);
-  exit;
 
 } catch (PDOException $e) {
   Flash::set('error', "حدث خطأ أثناء حذف المستخدم: " . $e->getMessage());

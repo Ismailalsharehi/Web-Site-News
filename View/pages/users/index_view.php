@@ -2,27 +2,27 @@
 
 
 
-require_once __DIR__ . '../../../../vendor/autoload.php';
-use Core\Flash;
-use Core\Session;
-use Controllers\users;
+// require_once __DIR__ . '../../../../vendor/autoload.php';
+// use Core\Flash;
+// use Core\Session;
+// use Controllers\users;
 
 
-var_dump($_POST);
-$success = Flash::get('success');
-if ($success) {
-    echo "<div class='alert alert-success'>" . $success . "</div>";
-} 
-$error = Flash::get('error');
-if ($error) {
-    echo "<div class='alert alert-success'>" . $error . "</div>";
-}
+// var_dump($_POST);
+// $success = Flash::get('success');
+// if ($success) {
+//     echo "<div class='alert alert-success'>" . $success . "</div>";
+// } 
+// $error = Flash::get('error');
+// if ($error) {
+//     echo "<div class='alert alert-success'>" . $error . "</div>";
+// }
 
-if(!Session::has("csrf_token")){
-    $token = bin2hex(random_bytes(32));
-    Session::set("csrf_token", $token);
-  }
-  $token = Session::get("csrf_token");
+// if(!Session::has("csrf_token")){
+//     $token = bin2hex(random_bytes(32));
+//     Session::set("csrf_token", $token);
+//   }
+//   $token = Session::get("csrf_token");
 
 ?>
 
@@ -32,6 +32,7 @@ if(!Session::has("csrf_token")){
 <?php require_once __DIR__ . '../../../parts/adminBar.php'; ?>
 
 
+
 <div class="bg-info">
     <div class="container py-5">
         <div class="card shadow-sm">
@@ -39,7 +40,7 @@ if(!Session::has("csrf_token")){
             <p class="text-danger text-center">
 
             </p>
-            <form action="../../../Controllers/users/index.php" method="POST" class="text-center" enctype="multipart/form-data">
+            <form action="/users_index" method="POST" class="text-center" enctype="multipart/form-data">
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($token) ?>">
             <div class="mb-3">
                     <label for="" class="form-label">الايميل</label>
@@ -52,7 +53,7 @@ if(!Session::has("csrf_token")){
                 <div class="mb-3">
                     <input type="submit" name="submit" value="ارسال" class="btn btn-danger w-50">
                 </div>
-                    <p>اذا لم يكن لديك حساب <a href=".../../create_view.php">انشاء حساب</a></p>
+                    <p>اذا لم يكن لديك حساب <a href="/users_create">انشاء حساب</a></p>
             </form>
         </div>
     </div>
