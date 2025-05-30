@@ -40,7 +40,9 @@
             <p class="text-danger text-center">
 
             </p>
-            <form action="/users_index" method="POST" class="text-center" enctype="multipart/form-data">
+            <div id="loginMessage" class="container mt-3"></div>
+
+            <form action="/users_index" method="POST" class="text-center" enctype="multipart/form-data" id="login">
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($token) ?>">
             <div class="mb-3">
                     <label for="" class="form-label">الايميل</label>
@@ -52,6 +54,10 @@
                 </div>
                 <div class="mb-3">
                     <input type="submit" name="submit" value="ارسال" class="btn btn-danger w-50">
+                </div>
+                <div class="mb-3 form-check"> 
+                  <input type="checkbox" name="rememperme" id="" placeholder=" تذكرني ">
+                  <label for="" class="form-check-label"> تذكرني</label>
                 </div>
                     <p>اذا لم يكن لديك حساب <a href="/users_create">انشاء حساب</a></p>
             </form>

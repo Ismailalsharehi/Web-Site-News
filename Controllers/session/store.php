@@ -61,6 +61,7 @@ function logOut()
     setcookie('PHPSESSID', '', time() - 3600, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
 }
 
+
 function base_path($path)
 {
     return __DIR__ . $path;

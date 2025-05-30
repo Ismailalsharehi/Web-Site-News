@@ -47,6 +47,18 @@ class Session
     self::start();
     session_unset();
     session_destroy();
+    setcookie(
+        'remember_me',
+        '',
+        [
+            'expires' => time() - 3600, 
+            'path' => '/',
+            'domain' => '',
+            'secure' => true,
+            'httponly' => true,
+            'samesite' => 'Strict'
+        ]
+    );
   }
 
   public static function all(): array

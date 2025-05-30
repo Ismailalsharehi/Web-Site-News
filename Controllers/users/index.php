@@ -13,25 +13,24 @@ use PDO;
 use PDOException;
 
 
-// var_dump($_POST);
 
-// بدء الجلسة الآمنة
-ini_set('session.cookie_secure', '1');      // فقط مع HTTPS
-ini_set('session.cookie_httponly', '1');    // الحماية من JavaScript
+
+ini_set('session.cookie_secure', '1');      
+ini_set('session.cookie_httponly', '1');    
 ini_set('session.use_only_cookies', '1');
 ini_set('session.use_strict_mode', '1');
 
-ini_set('session.cookie_samesite', 'Strict'); // الحماية من CSRF
-ini_set('session .cookie_lifetime', 0); // انتهاء الجلسة عند إغلاق المتصفح
-ini_set('session.gc_maxlifetime', 1440); // مدة الجلسة 24 دقيق\
+ini_set('session.cookie_samesite', 'Strict'); //  CSRF
+ini_set('session .cookie_lifetime', 0); 
+ini_set('session.gc_maxlifetime', 1440); 
 
 // var_dump($_POST);
 // Session::start();
 
-// تحقق من أن الطلب من نوع POST
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
   Flash::set('error', 'طلب غير صالح.');
-  // revresh the page 
+
 
   header('Location: /404');
   exit;
@@ -46,20 +45,16 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 //   exit;
 // }
 
-// استلام البيانات
+
 $email = trim($_POST['email'] ?? '');
 $password = trim($_POST['password'] ?? '');
 
-// إذا كانت هناك بيانات محفوظة في الجلسة (مثلاً من الخطوة السابقة)
-// if (Session::has('user_data')) {
-//     $user_data = Session::get('user_data');
-//     $email = trim($user_data['email'] ?? '');
-//     $password = trim($user_data['password'] ?? '');
-// }
 
-// التحقق من البيانات
+
 if (empty($email) || empty($password)) {
   Flash::set('error', 'يرجى ملء جميع الحقول.');
+
+  
   header('Location: /login');
   exit;
 }
@@ -74,7 +69,6 @@ if (strlen($password) < 6) {
   exit;
 }
 
-// الحماية من هجمات القوة الغاشمة (Brute Force)
 $login_attempts = Session::get('login_attempts') ?? 0;
 $last_attempt_time = Session::get('last_attempt_time') ?? 0;
 
@@ -88,7 +82,10 @@ if ($login_attempts >= 5 && time() - $last_attempt_time < 300) {
 Session::set('last_attempt_time', time()); // 
 Session::set('login_attempts', $login_attempts + 1);
 
-// الاتصال بقاعدة البيانات
+
+// create cockies 
+
+
 try {
   $db = Connection::connect();
   $stmt = $db->prepare("SELECT * FROM users WHERE email = :email");
@@ -110,27 +107,28 @@ try {
       'last_login' => date('Y-m-d H:i:s'),
     ]);
     Session::set('last_login_time', time());
-
-
-
-
-
-
-    // إعادة ضبط محاولات الدخول
     Session::set('login_attempts', 0);
 
-
+    if(isset($_POST['rememberme'])){
+    setcookie(
+      'remember_me',
+      $email,
+      [
+        'expires' => time() + 3600,
+        'path' => '/',
+        'domain' => '',
+        'secure' => true,
+        'httponly' => true,
+        'samesite' => 'Strict'
+      ]
+    );
+  }
 
     Flash::set('success', 'تم تسجيل الدخول بنجاح.');
+    
     header('Location: /');
-
-
     exit;
   } else {
-    // تحديث فشل الدخول
-    // $fail = $db->prepare("UPDATE users SET last_login_failed = NOW() WHERE email = :email");
-    // $fail->bindParam(':email', $email);
-    // $fail->execute();
 
     Flash::set('error', 'فشل تسجيل الدخول. تحقق من البريد وكلمة المرور.');
     header("Location: " . $_SERVER["HTTP_REFERER"]);
@@ -142,4 +140,4 @@ try {
   exit;
 }
 
-require('View/pages/users/index_view.php');
+// require('View/pages/users/index_view.php');
