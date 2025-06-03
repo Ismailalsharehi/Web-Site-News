@@ -65,9 +65,10 @@ Web-Site-News/
 
 ---
 
+
 ## 👥 الفريق
 
-- [**Ismail Saeed Al-Sharehi**](https://github.com/Ismailalsharehi) — **Team Leader**
+- [**Ismail Saeed Al-Sharehi**] (https://github.com/Ismailalsharehi) — **Team Leader**
 - **Mohammed Radwan Hassan**
 - **Mohammed Nabil Al-Shoukani**
  
